@@ -1,6 +1,6 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.3 Free</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.4 Free</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
-</style></head><body><header><h1>中医现代机制临床决策系统 V3.3 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V3.4 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -24,6 +24,8 @@ const A=["炎症","动力","屏障","微循环","神经自主","水液","代谢�
 const R=["持续/进行性胸痛胸闷伴气短冷汗或晕厥","卒中样症状","呕血黑便或大量便血","明显呼吸困难或发绀","持续高热伴意识改变","进行性吞咽困难或体重下降","新发双腿无力/会阴麻木/尿便控制异常","儿童呼吸急促/胸壁凹陷/明显喘鸣","快速生长肿块或恶性影像特征"];
 const AN=["未定","H. pylori","高尿酸/尿酸晶体","感染/病原","过敏原/鼻后滴流","药物副作用","结构性病变","肿瘤/癌前病变","代谢异常","自主神经/压力","其他"];
 const F=[
+["香砂六君子汤（思路）","脾胃/动力/痰湿","脾胃气虚兼气滞痰湿、胃气不和",{"动力":3,"水液":2,"神经自主":1,"屏障":1},["胃堵","嗳气后缓解","食欲一般","肠鸣","容易腹泻","口淡"],["实热","舌红黄腻","高热"],"C","绿","胃肠动力、分泌、气机协调、脑肠轴。","比六君子更偏气滞胀满与嗳气。"],
+["参苓白术散（思路）","脾虚/腹泻","脾气不足、运化失健、便溏易泻",{"动力":2,"屏障":2,"水液":2},["容易腹泻","食后不适","肠鸣","乏力"],["实热下利","腹痛拒按"],"C","绿","肠屏障、吸收、水液与动力支持。","偏长期易泻、脾虚底盘；不处理明显鼻痒咽痒。"],
 ["半夏泻心汤","胃肠/寒热错杂","寒热错杂、中焦痞满、胃气不和",{"炎症":2,"动力":3,"屏障":1,"神经自主":1,"水液":1},["烧心/反流","胃胀","恶心","腹部怕凉","口臭","苔腻"],["舌红少苔","纯实热"],"C","黄","降逆/胃动力 + 黄连黄芩抗炎 + 干姜温中。","寒热错杂明显时优先；嗳气上逆突出看旋覆代赭。"],
 ["半夏厚朴汤","咽-胃-脑轴","痰气互结、梅核气",{"动力":3,"神经自主":3,"水液":2,"炎症":1},["咽中异物感","清嗓频繁","紧张后加重","胸闷","恶心"],["高热咽痛","进行性吞咽困难"],"C","绿","HPA/自主神经、胃食管动力、5-HT、TRPV1/TRPA1。","情绪+咽堵最典型。"],
 ["旋覆代赭汤","反流/嗳气","胃虚痰饮、胃气上逆",{"动力":3,"炎症":1,"屏障":1,"神经自主":1},["嗳气频繁","饭后上顶","恶心","呃逆","反酸"],["明显实热","进行性吞咽困难"],"C","绿","胃排空、LES/TLESR、迷走神经、5-HT。","比半夏厚朴更偏胃动力和上逆。"],
@@ -214,6 +216,16 @@ function inferClinicalRoute(text){
       prefer:{},suppress:{'止嗽散（思路）':-10,'玉屏风散（思路）':-5,'温胆汤':-5},
       note:'鼻塞 + 脓性鼻分泌物优先解释为鼻腔/副鼻窦局部病变，再按寒热表型分层。'};
   }
+  const giBlock=/胃.*堵|堵着|胃不舒服|打嗝.*好|嗳气.*好|胃胀|胃口.*不舒服/.test(t);
+  const giSensitive=/容易拉肚子|稍微吃.*不舒服|吃不对.*拉肚子|肠鸣|叽里咕噜|胃肠.*弱/.test(t);
+  const acuteHeatDiarrhea=/腹泻|拉肚子/.test(t)&&/发热|口渴|肛门灼热|黄臭便|里急后重|舌红苔黄/.test(t);
+
+  if(allergicUpper && (giBlock||giSensitive)){
+    return {id:'allergic_upper_gi',title:'过敏性上气道 + 胃肠动力/易激双轴',primary:'鼻痒/咽痒/残余咳嗽：过敏性鼻炎/鼻后滴流或咳嗽高敏',secondary:['胃堵嗳气：胃气不降/功能性消化不良','饮食诱发肠鸣易泻：胃肠易激/脾胃底盘'],
+      prefer:{'玉屏风散（思路）':16,'半夏厚朴汤':12,'香砂六君子汤（思路）':14,'参苓白术散（思路）':giSensitive?6:0,'止嗽散（思路）':5},
+      suppress:{'葛根芩连汤':acuteHeatDiarrhea?0:-18,'当归饮子':-12,'黄连阿胶汤':-8},
+      note:'“偶尔吃不对就腹泻”不能等同热性下利；鼻咽过敏链与胃肠动力/易激链并存。',split:true};
+  }
   if(allergicUpper){
     return {id:'allergic_upper',title:'过敏性鼻炎—鼻后滴流—气道高敏路径',primary:'鼻炎/鼻后滴流导致咽喉刺激与咳嗽',secondary:[dryMucosa?'轻度津亏/黏膜干燥':'屏障易感'],
       prefer:{'玉屏风散（思路）':18,'止嗽散（思路）':15,'杏苏散（思路）':whiteMucus?8:2,'麦门冬汤':dryMucosa?5:0}, suppress:{'甘露饮（思路）':dampHeat?0:-8,'当归饮子':-5},
@@ -287,6 +299,10 @@ function calc(f,a){
 
   
   const route=inferClinicalRoute(t);
+  const casualDiarrhea=/容易拉肚子|吃不对.*拉肚子|稍微吃.*不舒服|肠鸣|叽里咕噜/.test(t);
+  const hotDiarrhea=/发热|口渴|肛门灼热|黄臭便|里急后重|舌红苔黄/.test(t);
+  if(casualDiarrhea && !hotDiarrhea && f.name.startsWith('葛根芩连汤')){n-=16;ag.push('饮食不慎偶发腹泻≠热性下利；缺乏发热、灼热、黄臭便等证据');}
+  if(/鼻子.*痒|鼻痒|嗓子.*痒|咽痒/.test(t) && f.name.startsWith('当归饮子')){n-=10;ag.push('鼻咽瘙痒优先考虑上气道过敏，不是慢性血虚风燥皮肤瘙痒');}
   const neg=negationSignals(t);
   if(neg.noFatigue && (f.name.startsWith('生脉散')||f.name.startsWith('玉屏风散')||f.name.startsWith('补阳还五'))){n-=8;ag.push('明确无乏力/底气足：气虚证据不足');}
   if(neg.noCough && (f.name.startsWith('止嗽散')||f.name.startsWith('杏苏散')||f.name.startsWith('桑菊饮')||f.name.startsWith('银翘散'))){n-=10;ag.push('明确不咳嗽：咳嗽方降权');}
@@ -690,6 +706,7 @@ function runRegressionTests(){
     {name:'外部-原发BMS排除继发原因',text:'63岁女性，长期口腔灼痛，口腔和牙科检查未见异常，维生素缺乏、药物毒性和感染等可逆原因已排除',route:'primary_bms'},
     {name:'外部-阿比特龙心血管电解质风险',text:'77岁男性前列腺癌，服阿比特龙后出现高血压、明显乏力和心悸，并有水肿',route:'abiraterone_safety'},
     {name:'反例-鼻炎眼痒但明确不咳',text:'有鼻炎鼻涕和眼痒，但是不咳嗽，也不清嗓',route:'general'},
+    {name:'外部-鼻咽过敏合胃堵易泻',text:'鼻子每天特别痒，嗓子也痒，有痰，咳嗽不严重但还会咳。胃总是堵着，打嗝之后会好，肠子叽里咕噜，稍微吃不对就容易拉肚子',route:'allergic_upper_gi'},
     {name:'反例-干硬便不能算出口型',text:'女58岁，大便干硬羊粪状，三四天一次，排便困难',route:'dry_constipation'}
   ];
   const results=cases.map(c=>{
