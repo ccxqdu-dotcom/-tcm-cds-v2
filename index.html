@@ -17,7 +17,7 @@
 <div class="card"><h2>5. 决策输出</h2><button class="primary full" onclick="analyze()">生成候选方剂 + 鉴别</button><div id="output"></div></div>
 <div class="card"><h2>6. 随访</h2><label>疗效终点</label><textarea id="endpoints"></textarea><label>随访记录</label><textarea id="followup"></textarea><div class="grid"><button class="soft" onclick="saveCase()">保存本机</button><button class="soft" onclick="exportCase()">导出 JSON</button></div></div></section>
 <section id="db" class="page"><div class="card"><h2>方剂数据库</h2><input id="q" placeholder="搜索方剂/症状/机制" oninput="renderDB()"><div id="dbList"></div></div></section>
-<section id="map" class="page"><div class="card"><h2>算法基准病例</h2><p class="small">系统升级时必须保持以下路由稳定：① 儿童鼻炎+清嗓咳嗽→过敏/鼻后滴流路径；② 温胆汤改善苔腻但舌灼不变→治疗反应不同步路径；③ 前列腺癌内分泌治疗+潮热多汗→ADT体温调节路径；④ 黄脓鼻塞+软便难排→双问题拆分路径。</p></div><div class="card"><h2>八轴机制总地图</h2><p><b>炎症：</b>NF-κB / STAT3 / MAPK / NLRP3</p><p><b>动力：</b>胃排空、5-HT、迷走神经、LES/TLESR</p><p><b>屏障：</b>tight junction、mucin、上皮修复</p><p><b>微循环：</b>内皮、NO、抗血小板、纤溶</p><p><b>神经自主：</b>GABA/谷氨酸、5-HT/DA、HPA、TRP</p><p><b>水液：</b>体液分布、组织间液、排泄</p><p><b>代谢排泄：</b>AMPK、尿酸转运、FXR/BSEP/MRP2</p><p><b>异常增殖：</b>PI3K/AKT/mTOR、Wnt/β-catenin、TGF-β/Smad、EMT</p><p class="small">A人体临床终点；B人体小型临床/标志物；C动物/整方前临床；D细胞；E网络药理。</p></div></section>
+<section id="map" class="page"><div class="card"><h2>自动回归测试</h2><div id="regressionStatus"></div><button class="soft full" onclick="document.getElementById('regressionStatus').innerHTML=renderRegressionTests()">重新运行测试</button></div><div class="card"><h2>算法基准病例</h2><p class="small">系统升级时必须保持以下路由稳定：① 儿童鼻炎+清嗓咳嗽→过敏/鼻后滴流路径；② 温胆汤改善苔腻但舌灼不变→治疗反应不同步路径；③ 前列腺癌内分泌治疗+潮热多汗→ADT体温调节路径；④ 黄脓鼻塞+软便难排→双问题拆分路径。</p></div><div class="card"><h2>八轴机制总地图</h2><p><b>炎症：</b>NF-κB / STAT3 / MAPK / NLRP3</p><p><b>动力：</b>胃排空、5-HT、迷走神经、LES/TLESR</p><p><b>屏障：</b>tight junction、mucin、上皮修复</p><p><b>微循环：</b>内皮、NO、抗血小板、纤溶</p><p><b>神经自主：</b>GABA/谷氨酸、5-HT/DA、HPA、TRP</p><p><b>水液：</b>体液分布、组织间液、排泄</p><p><b>代谢排泄：</b>AMPK、尿酸转运、FXR/BSEP/MRP2</p><p><b>异常增殖：</b>PI3K/AKT/mTOR、Wnt/β-catenin、TGF-β/Smad、EMT</p><p class="small">A人体临床终点；B人体小型临床/标志物；C动物/整方前临床；D细胞；E网络药理。</p></div></section>
 <section id="saved" class="page"><div class="card"><h2>本机病例库</h2><div id="cases"></div></div><div class="card"><button class="soft full" onclick="exportAll()">导出全部病例备份</button></div></section></main><div class="bottom"><button class="soft" onclick="newCase()">新病例</button><button class="primary" onclick="analyze()">重新分析</button></div>
 <script>
 const A=["炎症","动力","屏障","微循环","神经自主","水液","代谢排泄","异常增殖"];
@@ -605,6 +605,38 @@ function renderFollowupQuestions(text){
     '</div>';
 }
 
+
+function runRegressionTests(){
+  const cases=[
+    {name:'58岁鼻脓+软便难排+不咳不虚',text:'女58岁，不怎么排便，排便没劲，大便不干，松软，鼻腔黄脓痰，鼻塞鼻音，不咳嗽，没有乏力感，舌苔不厚腻，底气十足',route:'dual_sinus_constipation',checks:[['noCough',true],['noFatigue',true],['noThickGreasyCoat',true],['stoolNotDry',true]]},
+    {name:'儿童鼻炎鼻后滴流咳嗽',text:'男孩7岁，有鼻涕，鼻子红肿，眼睛痒，清嗓子，晚上咳嗽更多，白黏痰',route:'allergic_upper',checks:[['noCough',false]]},
+    {name:'明确不咳但鼻炎眼痒',text:'有鼻炎鼻涕和眼痒，但是不咳嗽，也不清嗓',route:'general',checks:[['noCough',true]]},
+    {name:'温胆有效但舌灼不变',text:'74岁，舌头像开水烫，黄厚腻苔。用了温胆汤后腹胀多梦和腻苔都明显改善，但舌灼感始终没变化，后来黄厚腻苔又出现',route:'burning_discordant',checks:[]},
+    {name:'ADT潮热',text:'男73岁，前列腺癌骨转移，长期内分泌激素治疗，突然潮热出汗很多，乏力口干心慌',route:'oncology_adt',checks:[]},
+    {name:'燥结便秘不应算软便出口型',text:'女58岁，大便干硬羊粪状，三四天一次，鼻塞但没有黄脓涕',route:'general',checks:[['stoolNotDry',false]]},
+    {name:'没有乏力不能算气虚肯定',text:'男60岁，声音洪亮，没有乏力，不累，食欲正常',route:'general',checks:[['noFatigue',true]]},
+    {name:'没有腹胀不能当胃胀',text:'大便不干，但肚子不胀，没有腹胀',route:'general',checks:[['noBloating',true],['stoolNotDry',true]]}
+  ];
+  const results=cases.map(c=>{
+    const neg=negationSignals(c.text);
+    const route=inferClinicalRoute(c.text);
+    let ok=route.id===c.route;
+    const details=[];
+    c.checks.forEach(pair=>{
+      const k=pair[0],v=pair[1],pass=neg[k]===v;
+      if(!pass)ok=false;
+      details.push(k+': '+(pass?'✓':'✗')+' ('+String(neg[k])+')');
+    });
+    return {name:c.name,ok,expected:c.route,actual:route.id,details};
+  });
+  return {pass:results.filter(x=>x.ok).length,total:results.length,results};
+}
+function renderRegressionTests(){
+  const r=runRegressionTests();
+  return '<div class="'+(r.pass===r.total?'ok':'alert')+'"><b>回归测试：'+r.pass+'/'+r.total+' 通过</b><br>'+
+    r.results.map(x=>(x.ok?'✓ ':'✗ ')+escapeHtml(x.name)+'：'+escapeHtml(x.actual)+(x.actual!==x.expected?'（应为 '+escapeHtml(x.expected)+'）':'')+(x.details.length?'<br><span class="small">'+x.details.map(escapeHtml).join(' · ')+'</span>':'')).join('<br>')+
+    '</div>';
+}
 function localDeepAnalyze(){
   const text=(document.getElementById('freeText').value||'').trim();
   if(!text){alert('请先输入一段症状描述');return;}
@@ -612,5 +644,5 @@ function localDeepAnalyze(){
   document.getElementById('extractPreview').insertAdjacentHTML('beforeend',renderFollowupQuestions(text));
 }
 
-pills('symptoms',S,ss);pills('flags',R,rr);renderAxes();AN.forEach(x=>{let o=document.createElement('option');o.textContent=x;anchor.appendChild(o)});renderCases();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+pills('symptoms',S,ss);pills('flags',R,rr);renderAxes();AN.forEach(x=>{let o=document.createElement('option');o.textContent=x;anchor.appendChild(o)});renderCases();const rs=document.getElementById('regressionStatus');if(rs)rs.innerHTML=renderRegressionTests();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script></body></html>
