@@ -1,4 +1,4 @@
-const CACHE='tcm-cds-v3-8';
+const CACHE='tcm-cds-v3-9';
 const ASSETS=['./','./index.html','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
