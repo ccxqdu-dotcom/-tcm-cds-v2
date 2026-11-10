@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.11 Free</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.12 Free</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
 details.advanced{padding:0;overflow:hidden}
 details.advanced>summary{list-style:none;cursor:pointer;padding:14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
@@ -8,7 +8,7 @@ details.advanced[open]>summary:after{content:'收起'}
 details.advanced[open]>summary{border-bottom:1px solid #e2e8f0}
 .advancedBody{padding:0 10px 10px}
 .advancedBody>.card{margin:10px 0;border-radius:12px;box-shadow:none}
-</style></head><body><header><h1>中医现代机制临床决策系统 V3.11 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V3.12 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -88,6 +88,17 @@ const F=[
 ["济川煎","虚性便秘","肾虚便秘、干而无力",{"动力":2,"屏障":2,"水液":1},["便秘","大便干","乏力","排便无力"],["实热积滞"],"C","绿","润肠+推进+下行协调。","干+没劲。"],
 ["消风散","急性湿热皮炎","风湿热、血燥",{"炎症":3,"屏障":2,"神经自主":1},["红湿痒","风团","渗出"],["单纯干痒血虚"],"C","黄","过敏炎症、瘙痒感觉神经、屏障。","红湿痒。"],
 ["当归饮子","慢性干痒/过敏","血虚风燥、慢性瘙痒",{"屏障":3,"炎症":2,"神经自主":2,"微循环":1},["干燥瘙痒","皮肤易过敏","夜间痒","脱屑"],["明显湿热渗出"],"C","黄","Th2/IL-4/IL-13、IgE、肥大细胞、TRP、屏障。","干慢性痒。"],
+
+["辛夷清肺饮（思路）","鼻窦/鼻窍","肺热壅盛、鼻窍不利、黄稠脓涕",{"炎症":3,"屏障":2,"水液":1},["鼻塞","黄稠鼻涕","脓涕","鼻音"],["清稀白涕","明显怕冷"],"C","黄","局部抗炎、黏膜屏障、分泌物清除。","黄脓鼻塞偏热时比玉屏风更贴近局部病因。"],
+["苍耳子散（思路）","鼻窍/鼻炎","风邪上攻、鼻窍不利",{"炎症":2,"屏障":2,"神经自主":1},["鼻塞","鼻痒","鼻涕","头额不适"],["高热","严重肝肾病"],"C","黄","鼻黏膜炎症、感觉神经与分泌调节。","偏鼻窍症状；苍耳子有毒性风险，不用于自行长期服用。"],
+["厚朴三物汤（思路）","通腑/动力","气滞腑实、腹满便难",{"动力":3,"神经自主":1},["排便困难","腹满","排不净"],["明显虚弱","腹泻"],"C","黄","结肠推进、腔内压力与气机下行。","比小承气更偏腹满气滞。"],
+["小承气汤（思路）","通腑/实积","腑实轻证、燥实内结",{"动力":3,"炎症":1},["便秘","腹满","大便干"],["软便","体虚","腹泻"],"C","黄","促进结肠推进与排便。","只适合短期实证方向，不等同所有便秘。"],
+["小柴胡汤（思路）","少阳/枢机","少阳不和、寒热往来、胸胁苦满",{"神经自主":3,"炎症":2,"动力":1},["口苦","胸胁满","恶心","往来寒热"],["纯表证","纯里实热"],"C","黄","免疫炎症、HPA/自主神经、胆胃轴。","少阳枢机证比一般情绪型反流更典型。"],
+["枳实薤白桂枝汤（思路）","胸胃轴/气滞","胸阳不振、痰气互结、胸痹兼胃气不降",{"动力":3,"神经自主":2,"微循环":2},["胸闷","反酸","胃胀","嗳气"],["持续胸痛未评估","实热"],"C","黄","胸胃动力、自主神经、微循环。","胸胃食管重叠症状明显时鉴别。"],
+["清胃散（思路）","口腔/胃火","胃火炽盛、牙龈口腔热痛",{"炎症":3,"屏障":2},["牙龈肿痛","口臭","口渴","胃火"],["虚寒","少苔阴虚为主"],"C","黄","口腔黏膜炎症、牙周炎症方向。","实火口腔症状明显。"],
+["玉女煎（思路）","胃火/阴虚","胃热偏盛兼肾阴不足",{"炎症":2,"屏障":3,"神经自主":1},["口渴","牙龈肿痛","潮热","口干"],["痰湿厚腻","纯虚寒"],"C","黄","清热+黏膜/津液支持。","胃火与阴虚并见。"],
+["百合地黄汤（思路）","病后/神经自主","病后余热、心神失养、百合病样神志不宁",{"神经自主":3,"屏障":2},["失眠","心烦","病后不适","口干"],["痰湿厚腻","明显实热"],"C","绿","神经自主、应激与黏膜津液方向。","病后睡眠/情绪异常而非典型痰热。"],
+["防风通圣散（思路）","表里俱实/代谢","表里俱实、郁热兼便秘",{"炎症":3,"代谢排泄":2,"动力":2},["便秘","肥胖","口渴","实热"],["体虚","腹泻","低体重"],"C","红","炎症、排泄、代谢与肠动力多轴。","只适合偏实热体质，不作一般减肥方。"],
 ["摩罗丹（思路）","萎缩性胃炎/黏膜","慢性萎缩、胃动力弱、黏膜损伤",{"屏障":3,"动力":2,"微循环":2,"炎症":2},["萎缩性胃炎","胃胀","胃痛"],["急性实热胃炎"],"B","黄","黏膜保护、胃动力、微循环、抗炎。","肠化/萎缩仍以胃镜病理/H.pylori为锚点。"],
 ["胆康（思路）","肝胆/胆汁","胆汁淤滞、胆道炎症",{"炎症":2,"代谢排泄":3,"动力":1},["胆囊炎","胆石","口苦"],["单纯胆囊息肉无炎症"],"C","黄","胆汁流动、胆汁酸代谢、抗炎。","不是已证实消息肉。"]
 ].map(x=>({name:x[0],cluster:x[1],pattern:x[2],axes:x[3],supports:x[4],contra:x[5],evidence:x[6],risk:x[7],mechanism:x[8],compare:x[9]}));
@@ -370,7 +381,36 @@ function calc(f,a){
 function safety(){let n=[],a=+age.value,h=history.value;if(a&&a<18)n.push('儿童：不自动换算成人剂量。');if(a>=70)n.push('高龄：优先检查肝肾功能、电解质和相互作用。');if(/癌|肿瘤|转移/.test(h))n.push('肿瘤背景：治疗副作用/结构性并发症优先。');if(/抗凝|华法林|阿司匹林|氯吡格雷/.test(h))n.push('抗凝/抗血小板：活血化瘀类需评估出血风险。');if(/高血压/.test(h))n.push('高血压：长期大剂量甘草、麻黄类谨慎。');return n}
 
 
-const FORMULA_HERBS={
+const FORMULA_HERBS={  '四妙丸':['苍术','黄柏','牛膝','薏苡仁'],
+  '血府逐瘀汤':['桃仁','红花','当归','生地黄','川芎','赤芍','牛膝','桔梗','柴胡','枳壳','甘草'],
+  '补阳还五汤':['黄芪','当归尾','赤芍','地龙','川芎','红花','桃仁'],
+  '桑菊饮':['桑叶','菊花','苦杏仁','连翘','薄荷','苦桔梗','生甘草','苇根'],
+  '银翘散':['金银花','连翘','苦桔梗','薄荷','竹叶','生甘草','荆芥穗','淡豆豉','牛蒡子'],
+  '龙胆泻肝汤':['龙胆草','黄芩','栀子','泽泻','木通','车前子','当归','生地黄','柴胡','甘草'],
+  '三仁汤':['杏仁','白蔻仁','薏苡仁','厚朴','半夏','通草','竹叶','滑石'],
+  '甘露消毒丹':['滑石','茵陈','黄芩','石菖蒲','川贝母','木通','藿香','连翘','白豆蔻','薄荷','射干'],
+  '一贯煎':['北沙参','麦冬','当归','生地黄','枸杞子','川楝子'],
+  '乌梅丸':['乌梅','细辛','干姜','黄连','当归','附子','蜀椒','桂枝','人参','黄柏'],
+  '完带汤':['白术','山药','人参','白芍','车前子','苍术','甘草','陈皮','黑芥穗','柴胡'],
+  '金水六君煎':['当归','熟地黄','陈皮','半夏','茯苓','炙甘草'],
+  '射干麻黄汤':['射干','麻黄','生姜','细辛','紫菀','款冬花','五味子','大枣','半夏'],
+  '黄连汤':['黄连','甘草','干姜','桂枝','人参','半夏','大枣'],
+  '柴胡桂枝干姜汤':['柴胡','桂枝','干姜','瓜蒌根','黄芩','牡蛎','炙甘草'],
+  '济川煎':['当归','牛膝','肉苁蓉','泽泻','升麻','枳壳'],
+  '消风散':['荆芥','防风','牛蒡子','蝉蜕','苍术','苦参','木通','石膏','知母','当归','生地黄','胡麻仁','甘草'],
+  '摩罗丹（思路）':['百合','麦冬','石斛','玄参','三七','当归','蒲黄','川芎','茯苓','白术','鸡内金','地榆','泽泻','九节菖蒲','茵陈','白芍','延胡索','乌药'],
+  '胆康（思路）':['柴胡','蒲公英','大黄','郁金','茵陈','人工牛黄','栀子','薄荷素油'],
+  '辛夷清肺饮（思路）':['辛夷','黄芩','栀子','麦冬','百合','石膏','知母','甘草','枇杷叶'],
+  '苍耳子散（思路）':['苍耳子','辛夷','白芷','薄荷'],
+  '厚朴三物汤（思路）':['厚朴','枳实','大黄'],
+  '小承气汤（思路）':['大黄','厚朴','枳实'],
+  '小柴胡汤（思路）':['柴胡','黄芩','人参','半夏','生姜','甘草','大枣'],
+  '枳实薤白桂枝汤（思路）':['枳实','厚朴','薤白','桂枝','瓜蒌'],
+  '清胃散（思路）':['生地黄','当归身','牡丹皮','黄连','升麻'],
+  '玉女煎（思路）':['石膏','熟地黄','麦冬','知母','牛膝'],
+  '百合地黄汤（思路）':['百合','生地黄'],
+  '防风通圣散（思路）':['防风','荆芥','连翘','麻黄','薄荷','川芎','当归','白芍','白术','栀子','大黄','芒硝','石膏','黄芩','桔梗','甘草','滑石'],
+
   '酸枣仁汤（思路）':['酸枣仁','知母','茯苓','川芎','甘草'],
   '止嗽散（思路）':['桔梗','荆芥','紫菀','百部','白前','陈皮','甘草'],
   '杏苏散（思路）':['苏叶','半夏','茯苓','前胡','桔梗','枳壳','陈皮','苦杏仁','生姜','大枣','甘草'],
@@ -411,19 +451,20 @@ const FORMULA_HERBS={
   '当归四逆汤':['当归','桂枝','芍药','细辛','甘草','通草','大枣']
 };
 function formulaHerbs(name){
-  return FORMULA_HERBS[name]||FORMULA_HERBS[name.replace('（思路）','') ]||null;
+  return FORMULA_HERBS[name]||FORMULA_HERBS[name.replace('（思路）','')]||FORMULA_HERBS[name+'（思路）']||null;
 }
 function routeFormulaWhitelist(route){
   const m={
     insomnia_reflux_autonomic:['温胆汤','柴胡加龙骨牡蛎汤','酸枣仁汤（思路）','半夏厚朴汤','半夏泻心汤'],
-    postinfectious_phlegm_cough:['止嗽散（思路）','杏苏散（思路）','桑菊饮（思路）','半夏厚朴汤'],
+    postinfectious_phlegm_cough:['止嗽散（思路）','杏苏散（思路）','桑菊饮','半夏厚朴汤','射干麻黄汤'],
     allergic_upper_gi:['玉屏风散（思路）','半夏厚朴汤','香砂六君子汤（思路）','参苓白术散（思路）','止嗽散（思路）'],
-    allergic_upper:['玉屏风散（思路）','止嗽散（思路）','杏苏散（思路）','麦门冬汤'],
+    allergic_upper:['玉屏风散（思路）','止嗽散（思路）','杏苏散（思路）','麦门冬汤','苍耳子散（思路）'],
     burning_discordant:['麦门冬汤','甘露饮（思路）','温胆汤','柴胡加龙骨牡蛎汤'],
     oncology_adt:['引火汤（思路）','生脉散（思路）','温胆汤'],
     dry_constipation:['麻子仁丸','济川煎（思路）'],
-    defecatory_disorder:['济川煎（思路）'],
-    reflux_insomnia_autonomic:['温胆汤','半夏厚朴汤','酸枣仁汤（思路）','柴胡加龙骨牡蛎汤','黄连阿胶汤']
+    defecatory_disorder:['济川煎','厚朴三物汤（思路）','小承气汤（思路）'],
+    reflux_insomnia_autonomic:['温胆汤','半夏厚朴汤','酸枣仁汤（思路）','柴胡加龙骨牡蛎汤','黄连阿胶汤','百合地黄汤（思路）'],
+    sinus_local_infection:['辛夷清肺饮（思路）','苍耳子散（思路）','银翘散','甘露消毒丹','三仁汤']
   };
   return m[route.id]||null;
 }
@@ -434,7 +475,7 @@ function analyze(){
   let a=axisVals(),top=Object.entries(a).sort((x,y)=>y[1]-x[1]).filter(x=>x[1]).slice(0,3);
   const wl=routeFormulaWhitelist(route);
   const pool=wl?F.filter(f=>wl.includes(f.name)):F;
-  let list=pool.map(f=>({f,...calc(f,a)})).sort((x,y)=>y.n-x.n).slice(0,6);
+  let list=pool.map(f=>({f,...calc(f,a)})).sort((x,y)=>y.n-x.n).slice(0,8);
   let h='<div class="ok"><b>临床路径：</b>'+route.title+' <span class="tag">'+route.id+'</span><br><b>主问题：</b>'+route.primary+
         (route.secondary.length?'<br><b>次问题：</b>'+route.secondary.join(' · '):'')+
         '<br><b>病因锚点：</b>'+anchor.value+
