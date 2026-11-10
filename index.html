@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.12.3 Free</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.12.4 Free</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
 details.advanced{padding:0;overflow:hidden}
 details.advanced>summary{list-style:none;cursor:pointer;padding:14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
@@ -8,7 +8,7 @@ details.advanced[open]>summary:after{content:'收起'}
 details.advanced[open]>summary{border-bottom:1px solid #e2e8f0}
 .advancedBody{padding:0 10px 10px}
 .advancedBody>.card{margin:10px 0;border-radius:12px;box-shadow:none}
-</style></head><body><header><h1>中医现代机制临床决策系统 V3.12.3 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V3.12.4 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -39,6 +39,7 @@ const A=["炎症","动力","屏障","微循环","神经自主","水液","代谢�
 const R=["持续/进行性胸痛胸闷伴气短冷汗或晕厥","卒中样症状","呕血黑便或大量便血","明显呼吸困难或发绀","持续高热伴意识改变","进行性吞咽困难或体重下降","新发双腿无力/会阴麻木/尿便控制异常","儿童呼吸急促/胸壁凹陷/明显喘鸣","快速生长肿块或恶性影像特征"];
 const AN=["未定","H. pylori","高尿酸/尿酸晶体","感染/病原","过敏原/鼻后滴流","药物副作用","结构性病变","肿瘤/癌前病变","代谢异常","自主神经/压力","其他"];
 const F=[
+["瓜蒌瞿麦丸（栝楼瞿麦丸）","肾水液/下寒上燥","小便不利、有水气、口渴；须辨下寒上燥，不因蛋白尿或水肿单独用方",{"水液":3,"炎症":2,"代谢排泄":2,"异常增殖":1},["小便不利","口渴","腹中不温"],["尿路梗阻待排","急性少尿","妊娠","心律失常"],"C","红","整方大鼠研究中p-p38 MAPK、MCP-1、p-CREB、FN、bFGF、IGF等指标变化；动物肾病模型的尿蛋白等指标改善。NF-κB、HSPA5/ALOX5/ANXA1属于网络药理预测；AQP2/V2R/ENaC未经整方验证。人体获益尚未确定。","与五苓散、猪苓汤、金匮肾气丸鉴别。炮附子与天花粉属于十八反警示组合，必须专家核查。"],
 ["酸枣仁汤（思路）","睡眠/神经自主","虚烦失眠、心神不宁",{"神经自主":3,"屏障":1},["入睡困难","多梦","心烦","心慌"],["痰多恶心","明显实热"],"B","绿","GABA能系统、睡眠调节、应激轴。","若痰湿胃不和明显，温胆汤更优先。"],
 ["香砂六君子汤（思路）","脾胃/动力/痰湿","脾胃气虚兼气滞痰湿、胃气不和",{"动力":3,"水液":2,"神经自主":1,"屏障":1},["胃堵","嗳气后缓解","食欲一般","肠鸣","容易腹泻","口淡"],["实热","舌红黄腻","高热"],"C","绿","胃肠动力、分泌、气机协调、脑肠轴。","比六君子更偏气滞胀满与嗳气。"],
 ["参苓白术散（思路）","脾虚/腹泻","脾气不足、运化失健、便溏易泻",{"动力":2,"屏障":2,"水液":2},["容易腹泻","食后不适","肠鸣","乏力"],["实热下利","腹痛拒按"],"C","绿","肠屏障、吸收、水液与动力支持。","偏长期易泻、脾虚底盘；不处理明显鼻痒咽痒。"],
@@ -405,7 +406,8 @@ function calc(f,a){
 function safety(){let n=[],a=+age.value,h=history.value;if(a&&a<18)n.push('儿童：不自动换算成人剂量。');if(a>=70)n.push('高龄：优先检查肝肾功能、电解质和相互作用。');if(/癌|肿瘤|转移/.test(h))n.push('肿瘤背景：治疗副作用/结构性并发症优先。');if(/抗凝|华法林|阿司匹林|氯吡格雷/.test(h))n.push('抗凝/抗血小板：活血化瘀类需评估出血风险。');if(/高血压/.test(h))n.push('高血压：长期大剂量甘草、麻黄类谨慎。');if(/妊娠|怀孕|孕妇|备孕/.test(h+' '+(document.getElementById('freeText')?.value||'')))n.push('妊娠或备孕：必须逐项审核药材安全性与禁忌，不可自行用药。');if(/肝硬化|肝功能异常|肾功能不全|慢性肾病/.test(h))n.push('肝肾疾病：核查药材毒性、剂量和相互作用。');return n}
 
 
-const FORMULA_HERBS={  '四妙丸':['苍术','黄柏','牛膝','薏苡仁'],
+const FORMULA_HERBS={  '瓜蒌瞿麦丸（栝楼瞿麦丸）':['天花粉（栝蒌根）','茯苓','山药（薯蓣）','炮附子','瞿麦'],
+  '四妙丸':['苍术','黄柏','牛膝','薏苡仁'],
   '血府逐瘀汤':['桃仁','红花','当归','生地黄','川芎','赤芍','牛膝','桔梗','柴胡','枳壳','甘草'],
   '补阳还五汤':['黄芪','当归尾','赤芍','地龙','川芎','红花','桃仁'],
   '桑菊饮':['桑叶','菊花','苦杏仁','连翘','薄荷','苦桔梗','生甘草','苇根'],
@@ -555,6 +557,8 @@ function analyze(){
 
   h+='<p class="small">排序遵循：病因锚点 ＞ 高风险/治疗反应 ＞ 临床路径 ＞ 方证 ＞ 八轴。不是处方。</p>';
   list.forEach((z,i)=>{let f=z.f;const herbs=formulaHerbs(f.name);h+='<div class="result"><b>#'+(i+1)+' '+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span> <span class="tag">风险 '+f.risk+'</span>'+(herbs?'<p><b>组成药物：</b>'+herbs.map(escapeHtml).join('、')+'</p>':'<p class="small"><b>组成药物：</b>数据库暂未录入</p>')+'<p><b>病机：</b>'+f.pattern+'</p><p><b>机制：</b>'+f.mechanism+'</p><div class="why"><div><b>为什么选</b><br>'+(z.w.length?z.w.map(x=>'• '+x).join('<br>'):'暂无明显支持项')+'</div><div><b>反证</b><br>'+(z.ag.length?z.ag.map(x=>'• '+x).join('<br>'):f.contra.map(x=>'• '+x).join('<br>'))+'</div></div><p class="small"><b>鉴别：</b>'+f.compare+'</p></div>'});
+  const drugAlerts=[...new Set(list.map(z=>formulaSafetyGate(z.f)).filter(Boolean))];
+  if(drugAlerts.length)h+='<div class="alert"><b>药材组合强制复核</b><br>'+drugAlerts.map(escapeHtml).join('<br>')+'</div>';
   let sf=safety();if(sf.length)h+='<div class="warn"><b>安全提示</b><br>'+sf.map(x=>'• '+x).join('<br>')+'</div>';
   output.innerHTML=h;
   updateCompactClinicalSummary();
@@ -567,7 +571,29 @@ function renderCases(){let x=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[
 function loadCase(i){let c=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]')[i];if(!c)return;['caseName','age','sex','dx','history','anchor','notes','tongue','coat','body','pulse','coldheat','defex','prod','dir','endpoints','followup'].forEach(k=>{if(c[k]!=null&&document.getElementById(k))document.getElementById(k).value=c[k]});ss.clear();(c.symptoms||[]).forEach(x=>ss.add(x));rr.clear();(c.flags||[]).forEach(x=>rr.add(x));pills('symptoms',S,ss);pills('flags',R,rr);A.forEach(a=>setAxis(a,(c.axes||{})[a]||0));document.querySelector('.tab').click();scrollTo(0,0)}
 function delCase(i){let x=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]');x.splice(i,1);localStorage.setItem('tcm_cases_v2',JSON.stringify(x));renderCases()}
 function newCase(){location.reload()}
-function renderDB(){let v=(q.value||'').toLowerCase();let x=F.filter(f=>!v||JSON.stringify(f).toLowerCase().includes(v));dbList.innerHTML=x.map(f=>'<div class="dbitem"><b>'+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span><p>'+f.pattern+'</p><p class="small">'+f.mechanism+'<br><b>支持：</b>'+f.supports.join('、')+'<br><b>反证：</b>'+f.contra.join('、')+'</p></div>').join('')}
+const FORMULA_STUDY_NOTES={
+ '瓜蒌瞿麦丸（栝楼瞿麦丸）':{
+   caution:'炮附子有严重心律失常等中毒风险；与天花粉同用属于传统十八反配伍警示；妊娠不宜自行使用。尿潴留、急性少尿、发热腰痛须先排梗阻、感染和急性肾损伤。',
+   evidence:'整方2008年糖尿病肾病大鼠研究；2017年栝楼瞿麦汤p38 MAPK大鼠研究；2024年网络药理仅为预测。人体疗效与肾脏长期结局证据不足。',
+   refs:['https://tjzhongyiyao.tjutcm.edu.cn/tjzyy/ch/reader/view_abstract.aspx?file_no=20080325&flag=1','https://xb.njucm.edu.cn/article/id/zr20170115','https://www.ahyyzz.cn/ch/reader/view_abstract.aspx?file_no=20241108&flag=1']
+ }
+};
+function formulaSafetyGate(f){
+ const h=formulaHerbs(f.name)||[];
+ return h.some(x=>/附子/.test(x))&&h.some(x=>/天花粉|栝蒌根/.test(x))
+  ?'高风险配伍：炮附子＋天花粉涉及传统十八反；必须专业核查，不可自行配伍。':'';
+}
+function renderDB(){
+ let v=(q.value||'').toLowerCase();
+ let x=F.filter(f=>!v||JSON.stringify(f).toLowerCase().includes(v));
+ dbList.innerHTML=x.map(f=>{
+   const note=FORMULA_STUDY_NOTES[f.name];
+   const extra=note?'<div class="alert"><b>安全审查：</b>'+escapeHtml(note.caution)+'</div>'+
+     '<p class="small"><b>证据说明：</b>'+escapeHtml(note.evidence)+'</p>'+
+     '<p class="small"><b>研究来源：</b>'+note.refs.map((u,i)=>'<a href="'+escapeHtml(u)+'" target="_blank" rel="noopener noreferrer">文献'+(i+1)+'</a>').join(' · ')+'</p>':'';
+   return '<div class="dbitem"><b>'+escapeHtml(f.name)+'</b> <span class="tag">'+escapeHtml(f.cluster)+'</span> <span class="tag">证据 '+escapeHtml(f.evidence)+'</span> <span class="tag">风险 '+escapeHtml(f.risk)+'</span><p>'+escapeHtml(f.pattern)+'</p><p class="small">'+escapeHtml(f.mechanism)+'<br><b>支持：</b>'+f.supports.map(escapeHtml).join('、')+'<br><b>反证：</b>'+f.contra.map(escapeHtml).join('、')+'</p>'+extra+'</div>';
+ }).join('');
+}
 
 function pickSymptom(label){ if(S.includes(label)) ss.add(label); }
 
@@ -966,6 +992,13 @@ function runRegressionTests(){
     const route=inferClinicalRoute(c.text);
     return {name:c.name,ok:route.id===c.route,expected:c.route,actual:route.id,details:[]};
   });
+  const formula=F.find(x=>x.name==='瓜蒌瞿麦丸（栝楼瞿麦丸）');
+  const formulationChecks=[
+    {name:'方剂-瓜蒌瞿麦丸五味组成完整',ok:!!formula&&formulaHerbs(formula.name)?.length===5},
+    {name:'安全-炮附子与天花粉配伍预警',ok:!!formula&&formulaSafetyGate(formula).includes('传统十八反')},
+    {name:'证据-动物机制与人体临床未混同',ok:!!formula&&formula.evidence==='C'&&formula.mechanism.includes('未经整方验证')}
+  ].map(x=>({name:x.name,ok:x.ok,expected:'通过',actual:x.ok?'通过':'失败',details:[]}));
+  results.push(...formulationChecks);
   const checks=[
     {name:'安全-胸痛气短拦截',ok:detectEmergencyFlags('突发胸痛伴气短冷汗').length>0},
     {name:'安全-呕血拦截',ok:detectEmergencyFlags('今天出现呕血').length>0},
@@ -1000,5 +1033,5 @@ function localDeepAnalyze(){
   document.getElementById('extractPreview').insertAdjacentHTML('beforeend',renderFollowupQuestions(text));
 }
 
-pills('symptoms',S,ss);pills('flags',R,rr);renderAxes();AN.forEach(x=>{let o=document.createElement('option');o.textContent=x;anchor.appendChild(o)});renderCases();const rs=document.getElementById('regressionStatus');if(rs)rs.innerHTML=renderRegressionTests();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js?v=3.12.3').catch(()=>{});
+pills('symptoms',S,ss);pills('flags',R,rr);renderAxes();AN.forEach(x=>{let o=document.createElement('option');o.textContent=x;anchor.appendChild(o)});renderCases();const rs=document.getElementById('regressionStatus');if(rs)rs.innerHTML=renderRegressionTests();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js?v=3.12.4').catch(()=>{});
 </script></body></html>
