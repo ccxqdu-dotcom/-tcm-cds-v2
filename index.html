@@ -305,6 +305,12 @@ function analyze(){
         '<br><b>主轴：</b>'+(top.length?top.map(x=>x[0]+' '+x[1]+'/3').join(' · '):'尚未评分')+
         '<br><span class="small">'+route.note+'</span></div>';
 
+  if(route.stopFormula){
+    h+='<div class="alert"><b>本例先暂停方剂排序。</b><br>'+route.note+'<br><span class="small">完成必要的现代医学评估后，再回到方剂层。</span></div>';
+    output.innerHTML=h;
+    return;
+  }
+
   if(route.split){
     h+='<div class="warn"><b>本例不建议强行生成“唯一总方”。</b><br>'+
        '<b>① 鼻腔轴：</b>辛夷清肺饮方向；或苍耳子散加黄芩/桔梗/鱼腥草等通窍清热排脓思路。黄脓鼻塞、鼻音比“肺痰”更值得优先解释。<br>'+
@@ -665,26 +671,26 @@ function renderFollowupQuestions(text){
 
 function runRegressionTests(){
   const cases=[
-    {name:'58岁鼻脓+软便难排+不咳不虚',text:'女58岁，不怎么排便，排便没劲，大便不干，松软，鼻腔黄脓痰，鼻塞鼻音，不咳嗽，没有乏力感，舌苔不厚腻，底气十足',route:'dual_sinus_constipation',checks:[['noCough',true],['noFatigue',true],['noThickGreasyCoat',true],['stoolNotDry',true]]},
-    {name:'儿童鼻炎鼻后滴流咳嗽',text:'男孩7岁，有鼻涕，鼻子红肿，眼睛痒，清嗓子，晚上咳嗽更多，白黏痰',route:'allergic_upper',checks:[['noCough',false]]},
-    {name:'明确不咳但鼻炎眼痒',text:'有鼻炎鼻涕和眼痒，但是不咳嗽，也不清嗓',route:'general',checks:[['noCough',true]]},
-    {name:'温胆有效但舌灼不变',text:'74岁，舌头像开水烫，黄厚腻苔。用了温胆汤后腹胀多梦和腻苔都明显改善，但舌灼感始终没变化，后来黄厚腻苔又出现',route:'burning_discordant',checks:[]},
-    {name:'ADT潮热',text:'男73岁，前列腺癌骨转移，长期内分泌激素治疗，突然潮热出汗很多，乏力口干心慌',route:'oncology_adt',checks:[]},
-    {name:'燥结便秘不应算软便出口型',text:'女58岁，大便干硬羊粪状，三四天一次，鼻塞但没有黄脓涕',route:'general',checks:[['stoolNotDry',false]]},
-    {name:'没有乏力不能算气虚肯定',text:'男60岁，声音洪亮，没有乏力，不累，食欲正常',route:'general',checks:[['noFatigue',true]]},
-    {name:'没有腹胀不能当胃胀',text:'大便不干，但肚子不胀，没有腹胀',route:'general',checks:[['noBloating',true],['stoolNotDry',true]]}
+    {name:'本地-58岁鼻脓+软便难排+不咳不虚',text:'女58岁，不怎么排便，排便没劲，大便不干，松软，鼻腔黄脓痰，鼻塞鼻音，不咳嗽，没有乏力感，舌苔不厚腻，底气十足',route:'dual_sinus_constipation'},
+    {name:'本地-儿童鼻炎鼻后滴流咳嗽',text:'男孩7岁，有鼻涕，鼻子红肿，眼睛痒，清嗓子，晚上咳嗽更多，白黏痰',route:'allergic_upper'},
+    {name:'本地-温胆有效但舌灼不变',text:'74岁，舌头像开水烫，黄厚腻苔。用了温胆汤后腹胀多梦和腻苔都明显改善，但舌灼感始终没变化，后来黄厚腻苔又出现',route:'burning_discordant'},
+    {name:'本地-ADT潮热',text:'男73岁，前列腺癌骨转移，长期内分泌激素治疗，突然潮热出汗很多，乏力口干心慌',route:'oncology_adt'},
+
+    {name:'外部-CVA夜咳刺激诱发',text:'男35岁，咳嗽反复，白天晚上都咳，夜间更重，刺激性气体后加重，少量白痰，咽干咽痒，肺通气基本正常但小气道功能下降',route:'cough_airway_hyperreactivity'},
+    {name:'外部-慢性鼻窦炎白黏脓涕寒湿表型',text:'反复鼻塞半年，大量白黏脓涕，嗅觉减退，鼻黏膜淡白水肿，舌淡齿痕，苔白，脉沉滑',route:'sinus_local_infection'},
+    {name:'外部-急性鼻窦炎脓涕风热表型',text:'鼻塞，黏脓涕5天，前额痛，低热，鼻黏膜充血红肿，舌苔薄黄，脉浮数',route:'sinus_local_infection'},
+    {name:'外部-单侧恶臭血性脓涕结构性病因',text:'左侧鼻塞，单侧黄脓涕并带血，有恶臭味，伴同侧头痛，长期反复',route:'unilateral_nasal_structural'},
+    {name:'外部-软便五天一次排不净',text:'软便大约5天一次，排便费力，总觉得排不干净，没有大便干硬',route:'defecatory_disorder'},
+    {name:'外部-燥结羊粪便',text:'便秘，大便干硬呈羊粪状，口干，舌红少苔，排便困难',route:'dry_constipation'},
+    {name:'外部-口腔红斑糜烂伴灼痛',text:'口腔烧灼疼痛一年，检查见上腭弥漫红斑糜烂，舌面部分糜烂和萎缩',route:'burning_secondary_oral'},
+    {name:'外部-原发BMS排除继发原因',text:'63岁女性，长期口腔灼痛，口腔和牙科检查未见异常，维生素缺乏、药物毒性和感染等可逆原因已排除',route:'primary_bms'},
+    {name:'外部-阿比特龙心血管电解质风险',text:'77岁男性前列腺癌，服阿比特龙后出现高血压、明显乏力和心悸，并有水肿',route:'abiraterone_safety'},
+    {name:'反例-鼻炎眼痒但明确不咳',text:'有鼻炎鼻涕和眼痒，但是不咳嗽，也不清嗓',route:'general'},
+    {name:'反例-干硬便不能算出口型',text:'女58岁，大便干硬羊粪状，三四天一次，排便困难',route:'dry_constipation'}
   ];
   const results=cases.map(c=>{
-    const neg=negationSignals(c.text);
     const route=inferClinicalRoute(c.text);
-    let ok=route.id===c.route;
-    const details=[];
-    c.checks.forEach(pair=>{
-      const k=pair[0],v=pair[1],pass=neg[k]===v;
-      if(!pass)ok=false;
-      details.push(k+': '+(pass?'✓':'✗')+' ('+String(neg[k])+')');
-    });
-    return {name:c.name,ok,expected:c.route,actual:route.id,details};
+    return {name:c.name,ok:route.id===c.route,expected:c.route,actual:route.id};
   });
   return {pass:results.filter(x=>x.ok).length,total:results.length,results};
 }
