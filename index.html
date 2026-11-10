@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.9 Free</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.10 Free</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
 details.advanced{padding:0;overflow:hidden}
 details.advanced>summary{list-style:none;cursor:pointer;padding:14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
@@ -8,7 +8,7 @@ details.advanced[open]>summary:after{content:'收起'}
 details.advanced[open]>summary{border-bottom:1px solid #e2e8f0}
 .advancedBody{padding:0 10px 10px}
 .advancedBody>.card{margin:10px 0;border-radius:12px;box-shadow:none}
-</style></head><body><header><h1>中医现代机制临床决策系统 V3.9 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V3.10 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -337,6 +337,49 @@ function calc(f,a){
 }
 function safety(){let n=[],a=+age.value,h=history.value;if(a&&a<18)n.push('儿童：不自动换算成人剂量。');if(a>=70)n.push('高龄：优先检查肝肾功能、电解质和相互作用。');if(/癌|肿瘤|转移/.test(h))n.push('肿瘤背景：治疗副作用/结构性并发症优先。');if(/抗凝|华法林|阿司匹林|氯吡格雷/.test(h))n.push('抗凝/抗血小板：活血化瘀类需评估出血风险。');if(/高血压/.test(h))n.push('高血压：长期大剂量甘草、麻黄类谨慎。');return n}
 
+
+const FORMULA_HERBS={
+  '止嗽散（思路）':['桔梗','荆芥','紫菀','百部','白前','陈皮','甘草'],
+  '杏苏散（思路）':['苏叶','半夏','茯苓','前胡','桔梗','枳壳','陈皮','苦杏仁','生姜','大枣','甘草'],
+  '桑菊饮（思路）':['桑叶','菊花','苦杏仁','连翘','薄荷','苦桔梗','生甘草','苇根'],
+  '半夏厚朴汤':['半夏','厚朴','茯苓','生姜','苏叶'],
+  '玉屏风散（思路）':['黄芪','白术','防风'],
+  '香砂六君子汤（思路）':['人参','白术','茯苓','甘草','陈皮','半夏','木香','砂仁'],
+  '参苓白术散（思路）':['人参','白术','茯苓','甘草','山药','白扁豆','莲子','薏苡仁','砂仁','桔梗'],
+  '温胆汤':['半夏','竹茹','枳实','陈皮','茯苓','甘草','生姜','大枣'],
+  '麦门冬汤':['麦冬','半夏','人参','甘草','粳米','大枣'],
+  '甘露饮（思路）':['熟地黄','生地黄','天门冬','麦门冬','黄芩','枳壳','石斛','枇杷叶','甘草','茵陈'],
+  '柴胡加龙骨牡蛎汤':['柴胡','龙骨','黄芩','生姜','铅丹','人参','桂枝','茯苓','半夏','大黄','牡蛎','大枣'],
+  '引火汤（思路）':['熟地黄','巴戟天','茯苓','麦冬','五味子'],
+  '生脉散（思路）':['人参','麦冬','五味子'],
+  '麻子仁丸':['麻子仁','芍药','枳实','大黄','厚朴','苦杏仁'],
+  '济川煎（思路）':['当归','牛膝','肉苁蓉','泽泻','升麻','枳壳'],
+  '葛根芩连汤':['葛根','黄芩','黄连','甘草'],
+  '当归饮子':['当归','白芍','川芎','生地黄','白蒺藜','防风','荆芥','何首乌','黄芪','甘草'],
+  '甘草泻心汤':['甘草','黄芩','干姜','半夏','大枣','黄连'],
+  '半夏泻心汤':['半夏','黄芩','干姜','人参','黄连','大枣','甘草'],
+  '旋覆代赭汤':['旋覆花','人参','生姜','代赭石','甘草','半夏','大枣'],
+  '黄连阿胶汤':['黄连','黄芩','芍药','阿胶','鸡子黄'],
+  '五苓散':['泽泻','猪苓','茯苓','白术','桂枝'],
+  '苓桂术甘汤':['茯苓','桂枝','白术','甘草'],
+  '茯苓饮':['茯苓','人参','白术','枳实','橘皮','生姜'],
+  '四逆散':['柴胡','枳实','芍药','甘草'],
+  '逍遥散':['柴胡','当归','白芍','白术','茯苓','炙甘草','生姜','薄荷'],
+  '保和丸':['山楂','神曲','半夏','茯苓','陈皮','连翘','莱菔子'],
+  '痛泻要方':['白术','白芍','陈皮','防风'],
+  '四神丸':['补骨脂','肉豆蔻','吴茱萸','五味子','生姜','大枣'],
+  '桂枝茯苓丸':['桂枝','茯苓','牡丹皮','桃仁','芍药'],
+  '当归芍药散':['当归','芍药','川芎','茯苓','白术','泽泻'],
+  '防己黄芪汤':['防己','黄芪','白术','甘草','生姜','大枣'],
+  '炙甘草汤':['炙甘草','生姜','人参','生地黄','桂枝','阿胶','麦冬','麻仁','大枣','清酒'],
+  '大建中汤':['蜀椒','干姜','人参','胶饴'],
+  '桂枝芍药知母汤':['桂枝','芍药','甘草','麻黄','生姜','白术','知母','防风','附子'],
+  '黄芪桂枝五物汤':['黄芪','桂枝','芍药','生姜','大枣'],
+  '当归四逆汤':['当归','桂枝','芍药','细辛','甘草','通草','大枣']
+};
+function formulaHerbs(name){
+  return FORMULA_HERBS[name]||FORMULA_HERBS[name.replace('（思路）','') ]||null;
+}
 function routeFormulaWhitelist(route){
   const m={
     postinfectious_phlegm_cough:['止嗽散（思路）','杏苏散（思路）','桑菊饮（思路）','半夏厚朴汤'],
@@ -385,7 +428,7 @@ function analyze(){
   }
 
   h+='<p class="small">排序遵循：病因锚点 ＞ 高风险/治疗反应 ＞ 临床路径 ＞ 方证 ＞ 八轴。不是处方。</p>';
-  list.forEach((z,i)=>{let f=z.f;h+='<div class="result"><b>#'+(i+1)+' '+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span> <span class="tag">风险 '+f.risk+'</span><p><b>病机：</b>'+f.pattern+'</p><p><b>机制：</b>'+f.mechanism+'</p><div class="why"><div><b>为什么选</b><br>'+(z.w.length?z.w.map(x=>'• '+x).join('<br>'):'暂无明显支持项')+'</div><div><b>反证</b><br>'+(z.ag.length?z.ag.map(x=>'• '+x).join('<br>'):f.contra.map(x=>'• '+x).join('<br>'))+'</div></div><p class="small"><b>鉴别：</b>'+f.compare+'</p></div>'});
+  list.forEach((z,i)=>{let f=z.f;const herbs=formulaHerbs(f.name);h+='<div class="result"><b>#'+(i+1)+' '+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span> <span class="tag">风险 '+f.risk+'</span>'+(herbs?'<p><b>组成药物：</b>'+herbs.join('、')+'</p>':'<p class="small"><b>组成药物：</b>数据库暂未录入</p>')+'<p><b>病机：</b>'+f.pattern+'</p><p><b>机制：</b>'+f.mechanism+'</p><div class="why"><div><b>为什么选</b><br>'+(z.w.length?z.w.map(x=>'• '+x).join('<br>'):'暂无明显支持项')+'</div><div><b>反证</b><br>'+(z.ag.length?z.ag.map(x=>'• '+x).join('<br>'):f.contra.map(x=>'• '+x).join('<br>'))+'</div></div><p class="small"><b>鉴别：</b>'+f.compare+'</p></div>'});
   let sf=safety();if(sf.length)h+='<div class="warn"><b>安全提示</b><br>'+sf.map(x=>'• '+x).join('<br>')+'</div>';
   output.innerHTML=h;
   updateCompactClinicalSummary();
