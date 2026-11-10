@@ -1,6 +1,6 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V2.5</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V2.6</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
-</style></head><body><header><h1>中医现代机制临床决策系统 V2.5</h1><div class="sub">双轨诊断 · 八轴机制 · 病因锚点 · 反证 · 证据等级 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V2.6</h1><div class="sub">双轨诊断 · 八轴机制 · 病因锚点 · 反证 · 证据等级 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -91,6 +91,21 @@ function treatmentResponseSignals(text){
   return {usedWendan,usedChaiLong,backgroundImproved,tonguePersistent,coatRecurred,chronicSeasonal,
           discordant:(usedWendan||usedChaiLong)&&backgroundImproved&&tonguePersistent};
 }
+
+function oncologyTreatmentSignals(text){
+  const t=(text||'').replace(/\s+/g,'');
+  const prostate=/前列腺癌/.test(t);
+  const metastatic=/骨转移|转移/.test(t);
+  const endocrine=/激素类药物|激素治疗|内分泌治疗|去势治疗|ADT|阿比特龙|恩杂鲁胺|戈舍瑞林|亮丙瑞林/.test(t);
+  const hotflash=/潮热|突然燥热|一阵热|更年期|出汗异常多|大汗/.test(t);
+  const cardio=/胸闷|胸口发紧|心慌|心悸/.test(t);
+  const urinary=/尿频|多尿/.test(t);
+  const neuropathy=/脚底.*麻|足底.*麻|手脚麻|肢体麻木/.test(t);
+  const diabetes=/糖尿病|血糖高/.test(t);
+  return {prostate,metastatic,endocrine,hotflash,cardio,urinary,neuropathy,diabetes,
+          treatmentHotflash:prostate&&endocrine&&hotflash,
+          highRisk:prostate&&(metastatic||endocrine)};
+}
 function calc(f,a){
   let n=0,w=[],ag=[];
   A.forEach(x=>{let m=Math.min(a[x]||0,f.axes[x]||0);n+=m*2;if(m>=2)w.push(x+'轴匹配')});
@@ -135,6 +150,17 @@ function calc(f,a){
   }
   if(tr.coatRecurred && f.name.startsWith('温胆汤')){n+=2;w.push('黄厚腻苔复发说明痰湿背景仍在，但不等于它解释持续舌灼感');}
   if(tr.chronicSeasonal && (f.name.startsWith('麦门冬汤')||f.name.startsWith('甘露饮'))){n+=2;w.push('多年季节性复发支持局部黏膜/感觉神经与环境因素长期存在');}
+  
+  const onc=oncologyTreatmentSignals(t);
+  if(onc.treatmentHotflash){
+    if(f.name.startsWith('引火汤')){n+=9;w.push('前列腺癌内分泌治疗 + 阵发潮热/多汗：下丘脑体温调节/神经内分泌轴高度匹配');}
+    if(f.name.startsWith('生脉散')){n+=5;w.push('多汗、乏力、口干、心悸支持气阴不足辅助轴，但不是病因锚点');}
+    if(f.name.startsWith('黄连阿胶汤')){n-=8;ag.push('治疗相关潮热应先于普通阴虚/失眠证候解释；且胖大微腻舌不支持典型黄连阿胶汤');}
+    if(f.name.startsWith('温胆汤')){n+=2;w.push('舌胖微腻/食欲一般提示痰湿背景，可作次级轴');}
+    if(f.name.startsWith('炙甘草汤')){n-=10;ag.push('高血压/潜在低钾及肿瘤药物背景下，不应因心悸直接优先炙甘草汤');}
+  }
+  if(onc.highRisk && f.name.startsWith('柴胡加龙骨牡蛎')){n-=2;ag.push('肿瘤治疗背景下，先排药物副作用/心血管与电解质问题，再解释为单纯自主神经失调');}
+
   return{n,w:[...new Set(w)].slice(0,10),ag:[...new Set(ag)]}
 }
 function safety(){let n=[],a=+age.value,h=history.value;if(a&&a<18)n.push('儿童：不自动换算成人剂量。');if(a>=70)n.push('高龄：优先检查肝肾功能、电解质和相互作用。');if(/癌|肿瘤|转移/.test(h))n.push('肿瘤背景：治疗副作用/结构性并发症优先。');if(/抗凝|华法林|阿司匹林|氯吡格雷/.test(h))n.push('抗凝/抗血小板：活血化瘀类需评估出血风险。');if(/高血压/.test(h))n.push('高血压：长期大剂量甘草、麻黄类谨慎。');return n}
@@ -223,7 +249,7 @@ function extractFreeText(text){
   if(/幽门螺杆菌|H\.pylori|Hp阳性/i.test(text))get('anchor').value='H. pylori';
   else if(/尿酸|痛风/.test(t))get('anchor').value='高尿酸/尿酸晶体';
   else if(/鼻炎|鼻后滴流|眼痒|过敏/.test(t))get('anchor').value='过敏原/鼻后滴流';
-  else if(/癌|肿瘤|癌前|肠化|异型增生/.test(t))get('anchor').value='肿瘤/癌前病变';
+  else if(/前列腺癌|癌|肿瘤|癌前|肠化|异型增生/.test(t))get('anchor').value='肿瘤/癌前病变';
   else if(/压力|紧张|焦虑|情绪/.test(t))get('anchor').value='自主神经/压力';
 
   get('notes').value=text;
@@ -284,6 +310,18 @@ function clinicalReasoning(text){
   if(/黑便|呕血|便血/.test(t))add(red,'消化道出血征象：优先就医');
 
   
+  
+  const onc=oncologyTreatmentSignals(text);
+  if(onc.treatmentHotflash){
+    add(modern,'前列腺癌内分泌治疗相关潮热/多汗：优先考虑 ADT/雄激素剥夺治疗导致的下丘脑体温调节不稳定');
+    add(tcm,'主轴更像“肾阴不足/虚阳浮越 + 气阴两虚”，但需同时保留脾虚痰湿背景');
+    add(tests,'核对具体抗肿瘤药物及开始时间；测血压/脉搏，做 ECG；查 K、Mg、Na、Ca、肌酐/eGFR、肝功能、CBC、HbA1c/血糖、TSH');
+    add(follow,'记录潮热/出汗频率、持续时间、诱因，以及心慌胸闷是否与发作同步');
+    if(onc.cardio)add(red,'胸闷/胸口发紧/心慌：高龄 + 前列腺癌治疗背景下先排心律失常、缺血和电解质异常');
+    if(onc.urinary)add(modern,'尿频需同时考虑高血糖、SGLT2/利尿药、膀胱/前列腺相关问题，不宜只解释为肾虚');
+    if(onc.neuropathy)add(modern,'足底麻木可见于糖尿病周围神经病变；若新发进行性并伴背痛、无力或尿便改变，需警惕脊髓压迫');
+  }
+
   const tr=treatmentResponseSignals(text);
   const response=[];
   if(tr.discordant){
