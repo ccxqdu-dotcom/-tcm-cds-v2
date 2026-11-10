@@ -1,6 +1,6 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V2.4</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V2.5</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
-</style></head><body><header><h1>中医现代机制临床决策系统 V2.4</h1><div class="sub">双轨诊断 · 八轴机制 · 病因锚点 · 反证 · 证据等级 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V2.5</h1><div class="sub">双轨诊断 · 八轴机制 · 病因锚点 · 反证 · 证据等级 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -79,6 +79,18 @@ function renderAxes(){let e=document.getElementById('axes');A.forEach(a=>{let d=
 function axisVals(){let o={};A.forEach(a=>o[a]=+document.getElementById('a_'+a).value);return o}
 function setAxis(a,v){document.getElementById('a_'+a).value=v;document.getElementById('v_'+a).textContent=v}
 function autoAxes(){let z={};A.forEach(a=>z[a]=0);F.forEach(f=>{let h=f.supports.filter(x=>ss.has(x)).length;if(h)A.forEach(a=>z[a]+=h*(f.axes[a]||0))});let m=Math.max(...Object.values(z),1);A.forEach(a=>setAxis(a,Math.min(3,Math.round(z[a]/m*3))));if(coat.value==='黄腻'){setAxis('炎症',Math.max(2,+document.getElementById('a_炎症').value));setAxis('水液',Math.max(2,+document.getElementById('a_水液').value))}if(coat.value==='白腻')setAxis('水液',Math.max(2,+document.getElementById('a_水液').value));if(coat.value==='少苔'||tongue.value==='红')setAxis('屏障',Math.max(2,+document.getElementById('a_屏障').value));if(tongue.value==='暗')setAxis('微循环',Math.max(2,+document.getElementById('a_微循环').value))}
+
+function treatmentResponseSignals(text){
+  const t=(text||'').replace(/\s+/g,'');
+  const usedWendan=/温胆汤/.test(t);
+  const usedChaiLong=/柴龙牡|柴胡加龙骨牡蛎/.test(t);
+  const backgroundImproved=/(都挺好|明显好转|改善|腻苔.*下去|腹胀.*好|多梦.*好|其他.*没.*不舒服|其他症状.*消失)/.test(t);
+  const tonguePersistent=/(舌头|舌).*?(没变化|没有变化|不变|还是|仍然|始终|一直).*?(烫|灼|贴|膜|不舒服)?/.test(t) || /(烫|灼|贴了一层|像贴了一层).*?(没变化|不变|仍然|还是)/.test(t);
+  const coatRecurred=/(舌苔|苔).*(又|重新).*(黄|厚|腻)|黄厚腻.*又/.test(t);
+  const chronicSeasonal=/(七八年|7.*8年|每年.*过年|每年.*冬|反复多年)/.test(t);
+  return {usedWendan,usedChaiLong,backgroundImproved,tonguePersistent,coatRecurred,chronicSeasonal,
+          discordant:(usedWendan||usedChaiLong)&&backgroundImproved&&tonguePersistent};
+}
 function calc(f,a){
   let n=0,w=[],ag=[];
   A.forEach(x=>{let m=Math.min(a[x]||0,f.axes[x]||0);n+=m*2;if(m>=2)w.push(x+'轴匹配')});
@@ -113,7 +125,17 @@ function calc(f,a){
     if(allergicUpper){n-=3;ag.push('鼻炎-鼻后滴流链条比黏膜湿热链更强');}
   }
   if(f.name.startsWith('麦门冬汤')&&dryMucosa){n+=3;w.push('咽唇干燥支持黏膜/津液轴');}
-  return{n,w:[...new Set(w)].slice(0,8),ag:[...new Set(ag)]}
+  
+  const tr=treatmentResponseSignals(t);
+  if(tr.discordant){
+    if(f.name.startsWith('温胆汤')){n-=8;ag.push('既往温胆汤已改善苔腻/腹胀等，但舌灼或贴膜感不随之改善：提示未解决主诉并非同一痰湿轴');}
+    if(f.name.startsWith('柴胡加龙骨牡蛎')){n-=6;ag.push('柴龙牡相关症状改善，但舌部主诉持续：自主神经/少阳轴不是当前唯一主轴');}
+    if(f.name.startsWith('麦门冬汤')){n+=8;w.push('原方背景症状改善而舌部感觉不变：支持转向黏膜/津液/感觉高敏轴');}
+    if(f.name.startsWith('甘露饮')){n+=5;w.push('黄厚腻苔复发 + 舌部黏膜不适：可作为“干热夹湿/黏膜轴”候选，但需看是否真有口苦、口臭、舌红裂等证据');}
+  }
+  if(tr.coatRecurred && f.name.startsWith('温胆汤')){n+=2;w.push('黄厚腻苔复发说明痰湿背景仍在，但不等于它解释持续舌灼感');}
+  if(tr.chronicSeasonal && (f.name.startsWith('麦门冬汤')||f.name.startsWith('甘露饮'))){n+=2;w.push('多年季节性复发支持局部黏膜/感觉神经与环境因素长期存在');}
+  return{n,w:[...new Set(w)].slice(0,10),ag:[...new Set(ag)]}
 }
 function safety(){let n=[],a=+age.value,h=history.value;if(a&&a<18)n.push('儿童：不自动换算成人剂量。');if(a>=70)n.push('高龄：优先检查肝肾功能、电解质和相互作用。');if(/癌|肿瘤|转移/.test(h))n.push('肿瘤背景：治疗副作用/结构性并发症优先。');if(/抗凝|华法林|阿司匹林|氯吡格雷/.test(h))n.push('抗凝/抗血小板：活血化瘀类需评估出血风险。');if(/高血压/.test(h))n.push('高血压：长期大剂量甘草、麻黄类谨慎。');return n}
 function analyze(){if(rr.size){output.innerHTML='<div class="alert"><b>触发红旗，停止方剂排序。</b><br>'+[...rr].map(x=>'• '+x).join('<br>')+'</div>';return}let a=axisVals(),top=Object.entries(a).sort((x,y)=>y[1]-x[1]).filter(x=>x[1]).slice(0,3),list=F.map(f=>({f,...calc(f,a)})).sort((x,y)=>y.n-x.n).slice(0,6);let h='<div class="ok"><b>病因锚点：</b>'+anchor.value+'<br><b>主轴：</b>'+(top.length?top.map(x=>x[0]+' '+x[1]+'/3').join(' · '):'尚未评分')+'</div><p class="small">排序=机制+方证覆盖度，不等于处方。</p>';list.forEach((z,i)=>{let f=z.f;h+='<div class="result"><b>#'+(i+1)+' '+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span> <span class="tag">风险 '+f.risk+'</span><p><b>病机：</b>'+f.pattern+'</p><p><b>机制：</b>'+f.mechanism+'</p><div class="why"><div><b>为什么选</b><br>'+(z.w.length?z.w.map(x=>'• '+x).join('<br>'):'暂无明显支持项')+'</div><div><b>反证</b><br>'+(z.ag.length?z.ag.map(x=>'• '+x).join('<br>'):f.contra.map(x=>'• '+x).join('<br>'))+'</div></div><p class="small"><b>鉴别：</b>'+f.compare+'</p></div>'});let s=safety();if(s.length)h+='<div class="warn"><b>安全提示</b><br>'+s.map(x=>'• '+x).join('<br>')+'</div>';output.innerHTML=h}
@@ -239,7 +261,7 @@ function clinicalReasoning(text){
   if(/鼻涕|鼻炎|鼻子.*红肿|眼痒/.test(t)&&/咳|清嗓|咽痒|嗓子痒/.test(t)){add(modern,'过敏性鼻炎 / 鼻后滴流（上气道咳嗽链）');add(tests,'鼻腔与咽后壁检查，必要时过敏评估');add(tcm,'鼻-咽-肺主链：鼻窍不利/风邪易感 → 鼻后滴流 → 咽喉刺激 → 咳嗽与清嗓');}
   if(/咳/.test(t)&&/夜间|晚上|运动|冷空气|反复/.test(t)){add(modern,'咳嗽变异性哮喘或气道高反应');add(tests,'持续/反复时考虑肺功能 ± FeNO');}
   if(/反酸|烧心|嗳气|清嗓|喉咙异物/.test(t)){add(modern,'胃食管反流 / 咽喉反流');add(tests,'记录反流频率；报警症状时胃镜/专科评估');}
-  if(/舌.*烫|舌灼|灼口|烧灼感/.test(t)){add(modern,'继发性灼口/舌痛：口干、念珠菌、铁/B12/叶酸/锌缺乏、糖代谢、甲状腺、药物等');add(tests,'口腔检查；CBC、铁蛋白、B12、叶酸、HbA1c/血糖、TSH，必要时锌');}
+  if(/舌.*烫|开水烫|舌灼|灼口|烧灼感|舌头.*贴.*层|像贴了一层/.test(t)){add(modern,'继发性灼口/舌痛：口干/唾液减少、念珠菌、铁/B12/叶酸/锌缺乏、糖代谢、甲状腺、反流、药物/接触刺激等');add(modern,'上述原因排除后，考虑 Burning Mouth Syndrome（神经病理性口腔感觉异常）');add(tests,'口腔黏膜检查；CBC、铁蛋白/铁、B12、叶酸、HbA1c/血糖、TSH，必要时锌；评估口干/唾液和反流');}
   if(/荨麻疹|洗澡.*疙瘩|热水.*疹/.test(t))add(modern,'热诱发/胆碱能性荨麻疹样反应');
   if(/尿酸|痛风/.test(t)){add(modern,'高尿酸血症/尿酸晶体炎症');add(tests,'血尿酸、肾功能');}
 
@@ -261,8 +283,16 @@ function clinicalReasoning(text){
   if(/胸痛|晕厥|冷汗/.test(t))add(red,'胸痛伴晕厥/冷汗：优先排心血管急症');
   if(/黑便|呕血|便血/.test(t))add(red,'消化道出血征象：优先就医');
 
-  const block=(title,arr)=>'<div><b>'+title+'</b><br>'+(arr.length?arr.map(x=>'• '+x).join('<br>'):'• 暂无明显线索')+'</div>';
-  return '<div class="card" style="background:#f8fafc"><h2>自动临床推理摘要</h2><div class="why">'+block('主诉摘要',chief)+block('现代医学鉴别/待排',modern)+'</div><div class="why" style="margin-top:8px">'+block('中医核心病机',tcm)+block('建议检查',tests)+'</div><div style="margin-top:8px">'+block('复评指标',follow)+'</div>'+(red.length?'<div class="alert" style="margin-top:8px"><b>红旗提示</b><br>'+red.map(x=>'• '+x).join('<br>')+'</div>':'')+'</div>';
+  
+  const tr=treatmentResponseSignals(text);
+  const response=[];
+  if(tr.discordant){
+    add(response,'治疗反应不同步：痰湿/自主神经相关症状随温胆汤/柴龙牡改善，但舌灼/贴膜感始终不变');
+    add(response,'推论：舌部主诉应作为独立轴重新评估，不宜继续仅按“黄厚腻苔=痰湿热”追方');
+    add(response,'当前策略：保留轻度化痰背景思路，同时把主轴转向黏膜/津液/感觉神经高敏，并先排继发性灼口原因');
+  }
+const block=(title,arr)=>'<div><b>'+title+'</b><br>'+(arr.length?arr.map(x=>'• '+x).join('<br>'):'• 暂无明显线索')+'</div>';
+  return '<div class="card" style="background:#f8fafc"><h2>自动临床推理摘要</h2><div class="why">'+block('主诉摘要',chief)+block('现代医学鉴别/待排',modern)+'</div><div class="why" style="margin-top:8px">'+block('中医核心病机',tcm)+block('建议检查',tests)+'</div>'+(response.length?'<div class="warn" style="margin-top:8px"><b>治疗反应证据</b><br>'+response.map(x=>'• '+x).join('<br>')+'</div>':'')+'<div style="margin-top:8px">'+block('复评指标',follow)+'</div>'+(red.length?'<div class="alert" style="margin-top:8px"><b>红旗提示</b><br>'+red.map(x=>'• '+x).join('<br>')+'</div>':'')+'</div>';
 }
 
 function analyzeFreeText(){
