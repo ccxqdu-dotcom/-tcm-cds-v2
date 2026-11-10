@@ -1,6 +1,6 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V2.6</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V2.7</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
-</style></head><body><header><h1>中医现代机制临床决策系统 V2.6</h1><div class="sub">双轨诊断 · 八轴机制 · 病因锚点 · 反证 · 证据等级 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V2.7</h1><div class="sub">双轨诊断 · 八轴机制 · 病因锚点 · 反证 · 证据等级 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -16,7 +16,7 @@
 <div class="card"><h2>5. 决策输出</h2><button class="primary full" onclick="analyze()">生成候选方剂 + 鉴别</button><div id="output"></div></div>
 <div class="card"><h2>6. 随访</h2><label>疗效终点</label><textarea id="endpoints"></textarea><label>随访记录</label><textarea id="followup"></textarea><div class="grid"><button class="soft" onclick="saveCase()">保存本机</button><button class="soft" onclick="exportCase()">导出 JSON</button></div></div></section>
 <section id="db" class="page"><div class="card"><h2>方剂数据库</h2><input id="q" placeholder="搜索方剂/症状/机制" oninput="renderDB()"><div id="dbList"></div></div></section>
-<section id="map" class="page"><div class="card"><h2>八轴机制总地图</h2><p><b>炎症：</b>NF-κB / STAT3 / MAPK / NLRP3</p><p><b>动力：</b>胃排空、5-HT、迷走神经、LES/TLESR</p><p><b>屏障：</b>tight junction、mucin、上皮修复</p><p><b>微循环：</b>内皮、NO、抗血小板、纤溶</p><p><b>神经自主：</b>GABA/谷氨酸、5-HT/DA、HPA、TRP</p><p><b>水液：</b>体液分布、组织间液、排泄</p><p><b>代谢排泄：</b>AMPK、尿酸转运、FXR/BSEP/MRP2</p><p><b>异常增殖：</b>PI3K/AKT/mTOR、Wnt/β-catenin、TGF-β/Smad、EMT</p><p class="small">A人体临床终点；B人体小型临床/标志物；C动物/整方前临床；D细胞；E网络药理。</p></div></section>
+<section id="map" class="page"><div class="card"><h2>算法基准病例</h2><p class="small">系统升级时必须保持以下路由稳定：① 儿童鼻炎+清嗓咳嗽→过敏/鼻后滴流路径；② 温胆汤改善苔腻但舌灼不变→治疗反应不同步路径；③ 前列腺癌内分泌治疗+潮热多汗→ADT体温调节路径；④ 黄脓鼻塞+软便难排→双问题拆分路径。</p></div><div class="card"><h2>八轴机制总地图</h2><p><b>炎症：</b>NF-κB / STAT3 / MAPK / NLRP3</p><p><b>动力：</b>胃排空、5-HT、迷走神经、LES/TLESR</p><p><b>屏障：</b>tight junction、mucin、上皮修复</p><p><b>微循环：</b>内皮、NO、抗血小板、纤溶</p><p><b>神经自主：</b>GABA/谷氨酸、5-HT/DA、HPA、TRP</p><p><b>水液：</b>体液分布、组织间液、排泄</p><p><b>代谢排泄：</b>AMPK、尿酸转运、FXR/BSEP/MRP2</p><p><b>异常增殖：</b>PI3K/AKT/mTOR、Wnt/β-catenin、TGF-β/Smad、EMT</p><p class="small">A人体临床终点；B人体小型临床/标志物；C动物/整方前临床；D细胞；E网络药理。</p></div></section>
 <section id="saved" class="page"><div class="card"><h2>本机病例库</h2><div id="cases"></div></div><div class="card"><button class="soft full" onclick="exportAll()">导出全部病例备份</button></div></section></main><div class="bottom"><button class="soft" onclick="newCase()">新病例</button><button class="primary" onclick="analyze()">重新分析</button></div>
 <script>
 const A=["炎症","动力","屏障","微循环","神经自主","水液","代谢排泄","异常增殖"];
@@ -106,6 +106,52 @@ function oncologyTreatmentSignals(text){
           treatmentHotflash:prostate&&endocrine&&hotflash,
           highRisk:prostate&&(metastatic||endocrine)};
 }
+
+function inferClinicalRoute(text){
+  const t=(text||'').replace(/\s+/g,'');
+  const onc=oncologyTreatmentSignals(t);
+  const tr=treatmentResponseSignals(t);
+  const allergicUpper=(/鼻涕|鼻塞|鼻炎|鼻子.*红肿|眼痒/.test(t)&&/咳|清嗓|咽痒|嗓子痒/.test(t));
+  const whiteMucus=/白痰|白黏痰|白粘痰|白鼻涕|白黏鼻涕|白粘鼻涕/.test(t);
+  const dryMucosa=/口干|咽干|嗓子干|嘴唇干|大便干|羊粪/.test(t);
+  const dampHeat=/黄腻|黄厚腻|口苦|口臭|尿黄/.test(t);
+  const burning=/舌.*烫|开水烫|舌灼|灼口|烧灼感|贴了一层|像贴.*层/.test(t);
+  const sinus=/鼻塞|鼻音/.test(t)&&/黄脓|脓痰|黄稠鼻涕|脓涕/.test(t);
+  const outletConstipation=/(不怎么排便|不排便|便秘|排便没劲|排不出来|排不净)/.test(t)&&/(大便不干|便不干|松软|软便)/.test(t);
+  const strongNotDeficient=/(底气十足|声音.*有力|没有乏力|不乏力|人看起来不虚)/.test(t);
+
+  if(onc.treatmentHotflash){
+    return {id:'oncology_adt',title:'肿瘤治疗相关潮热路径',primary:'ADT/内分泌治疗相关体温调节异常',secondary:['气阴不足','痰湿/代谢背景'],
+      prefer:{'引火汤（思路）':22,'生脉散（思路）':12,'温胆汤':3}, suppress:{'黄连阿胶汤':-14,'柴胡加龙骨牡蛎汤':-6,'炙甘草汤':-16},
+      note:'病因锚点优先于普通汗多/口干/失眠方证。'};
+  }
+  if(burning&&tr.discordant){
+    return {id:'burning_discordant',title:'治疗反应不同步的舌灼/异常感觉路径',primary:'舌部黏膜/感觉神经高敏',secondary:['痰湿背景可反复存在'],
+      prefer:{'麦门冬汤':20,'甘露饮（思路）':dampHeat?10:3,'温胆汤':-2,'柴胡加龙骨牡蛎汤':-8}, suppress:{'温胆汤':-8,'柴胡加龙骨牡蛎汤':-8},
+      note:'原方能改善背景症状但不能改变舌部主诉，必须换主轴。'};
+  }
+  if(allergicUpper){
+    return {id:'allergic_upper',title:'过敏性鼻炎—鼻后滴流—气道高敏路径',primary:'鼻炎/鼻后滴流导致咽喉刺激与咳嗽',secondary:[dryMucosa?'轻度津亏/黏膜干燥':'屏障易感'],
+      prefer:{'玉屏风散（思路）':18,'止嗽散（思路）':15,'杏苏散（思路）':whiteMucus?8:2,'麦门冬汤':dryMucosa?5:0}, suppress:{'甘露饮（思路）':dampHeat?0:-8,'当归饮子':-5},
+      note:'先处理鼻—咽—肺因果链，皮肤/干燥只作为次轴。'};
+  }
+  if(sinus&&outletConstipation){
+    return {id:'dual_sinus_constipation',title:'双问题路径：鼻窦/鼻咽脓性分泌物 + 非燥结排便障碍',primary:'上焦局部鼻腔/副鼻窦炎症',secondary:['下焦腑气下行/出口障碍'],
+      prefer:{},suppress:{'温胆汤':-8,'生脉散（思路）':-8,'黄连阿胶汤':-10,'玉屏风散（思路）':-5},
+      note:'两个问题应拆开处理，不宜强行用一个“痰湿脾虚”总方解释。',split:true,strongNotDeficient};
+  }
+  return {id:'general',title:'一般八轴路径',primary:'按八轴 + 方证 + 反证综合',secondary:[],prefer:{},suppress:{},note:'未触发更高优先级病因链。'};
+}
+
+function routeAdjustment(f,route){
+  let delta=0,why=[],against=[];
+  const keys=[f.name,f.name.replace('（思路）','')];
+  for(const k of keys){
+    if(route.prefer && route.prefer[k]!=null){delta+=route.prefer[k]; if(route.prefer[k]>0)why.push('临床路径优先');}
+    if(route.suppress && route.suppress[k]!=null){delta+=route.suppress[k]; if(route.suppress[k]<0)against.push('不属于当前主病因链');}
+  }
+  return {delta,why,against};
+}
 function calc(f,a){
   let n=0,w=[],ag=[];
   A.forEach(x=>{let m=Math.min(a[x]||0,f.axes[x]||0);n+=m*2;if(m>=2)w.push(x+'轴匹配')});
@@ -161,10 +207,35 @@ function calc(f,a){
   }
   if(onc.highRisk && f.name.startsWith('柴胡加龙骨牡蛎')){n-=2;ag.push('肿瘤治疗背景下，先排药物副作用/心血管与电解质问题，再解释为单纯自主神经失调');}
 
-  return{n,w:[...new Set(w)].slice(0,10),ag:[...new Set(ag)]}
+  
+  const route=inferClinicalRoute(t);
+  const ra=routeAdjustment(f,route);
+  n+=ra.delta; w.push(...ra.why); ag.push(...ra.against);
+  return{n,w:[...new Set(w)].slice(0,12),ag:[...new Set(ag)]}
+
 }
 function safety(){let n=[],a=+age.value,h=history.value;if(a&&a<18)n.push('儿童：不自动换算成人剂量。');if(a>=70)n.push('高龄：优先检查肝肾功能、电解质和相互作用。');if(/癌|肿瘤|转移/.test(h))n.push('肿瘤背景：治疗副作用/结构性并发症优先。');if(/抗凝|华法林|阿司匹林|氯吡格雷/.test(h))n.push('抗凝/抗血小板：活血化瘀类需评估出血风险。');if(/高血压/.test(h))n.push('高血压：长期大剂量甘草、麻黄类谨慎。');return n}
-function analyze(){if(rr.size){output.innerHTML='<div class="alert"><b>触发红旗，停止方剂排序。</b><br>'+[...rr].map(x=>'• '+x).join('<br>')+'</div>';return}let a=axisVals(),top=Object.entries(a).sort((x,y)=>y[1]-x[1]).filter(x=>x[1]).slice(0,3),list=F.map(f=>({f,...calc(f,a)})).sort((x,y)=>y.n-x.n).slice(0,6);let h='<div class="ok"><b>病因锚点：</b>'+anchor.value+'<br><b>主轴：</b>'+(top.length?top.map(x=>x[0]+' '+x[1]+'/3').join(' · '):'尚未评分')+'</div><p class="small">排序=机制+方证覆盖度，不等于处方。</p>';list.forEach((z,i)=>{let f=z.f;h+='<div class="result"><b>#'+(i+1)+' '+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span> <span class="tag">风险 '+f.risk+'</span><p><b>病机：</b>'+f.pattern+'</p><p><b>机制：</b>'+f.mechanism+'</p><div class="why"><div><b>为什么选</b><br>'+(z.w.length?z.w.map(x=>'• '+x).join('<br>'):'暂无明显支持项')+'</div><div><b>反证</b><br>'+(z.ag.length?z.ag.map(x=>'• '+x).join('<br>'):f.contra.map(x=>'• '+x).join('<br>'))+'</div></div><p class="small"><b>鉴别：</b>'+f.compare+'</p></div>'});let s=safety();if(s.length)h+='<div class="warn"><b>安全提示</b><br>'+s.map(x=>'• '+x).join('<br>')+'</div>';output.innerHTML=h}
+function analyze(){
+  if(rr.size){output.innerHTML='<div class="alert"><b>触发红旗，停止方剂排序。</b><br>'+[...rr].map(x=>'• '+x).join('<br>')+'</div>';return}
+  const text=(document.getElementById('freeText')?.value||notes.value||'');
+  const route=inferClinicalRoute(text);
+  let a=axisVals(),top=Object.entries(a).sort((x,y)=>y[1]-x[1]).filter(x=>x[1]).slice(0,3);
+  let list=F.map(f=>({f,...calc(f,a)})).sort((x,y)=>y.n-x.n).slice(0,6);
+  let h='<div class="ok"><b>临床路径：</b>'+route.title+'<br><b>主问题：</b>'+route.primary+
+        (route.secondary.length?'<br><b>次问题：</b>'+route.secondary.join(' · '):'')+
+        '<br><b>病因锚点：</b>'+anchor.value+
+        '<br><b>主轴：</b>'+(top.length?top.map(x=>x[0]+' '+x[1]+'/3').join(' · '):'尚未评分')+
+        '<br><span class="small">'+route.note+'</span></div>';
+
+  if(route.split){
+    h+='<div class="warn"><b>本例不建议强行生成“唯一总方”。</b><br>系统识别到两个相对独立的治疗轴：<br>① 鼻腔/副鼻窦黄脓性分泌物：优先耳鼻喉病因评估 + 通窍/清热排脓方向。<br>② 大便不干但排便无力/排不净：优先判断结肠推进慢还是出口协调障碍，再考虑枳实厚朴木香/小承气或济川煎等不同方向。<br><span class="small">此前补中益气、六君/温胆效果弱，本身属于反证。</span></div>';
+  }
+
+  h+='<p class="small">排序遵循：病因锚点 ＞ 高风险/治疗反应 ＞ 临床路径 ＞ 方证 ＞ 八轴。不是处方。</p>';
+  list.forEach((z,i)=>{let f=z.f;h+='<div class="result"><b>#'+(i+1)+' '+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span> <span class="tag">风险 '+f.risk+'</span><p><b>病机：</b>'+f.pattern+'</p><p><b>机制：</b>'+f.mechanism+'</p><div class="why"><div><b>为什么选</b><br>'+(z.w.length?z.w.map(x=>'• '+x).join('<br>'):'暂无明显支持项')+'</div><div><b>反证</b><br>'+(z.ag.length?z.ag.map(x=>'• '+x).join('<br>'):f.contra.map(x=>'• '+x).join('<br>'))+'</div></div><p class="small"><b>鉴别：</b>'+f.compare+'</p></div>'});
+  let sf=safety();if(sf.length)h+='<div class="warn"><b>安全提示</b><br>'+sf.map(x=>'• '+x).join('<br>')+'</div>';
+  output.innerHTML=h;
+}
 function data(){return{caseName:caseName.value||'未命名病例',age:age.value,sex:sex.value,dx:dx.value,history:history.value,anchor:anchor.value,notes:notes.value,tongue:tongue.value,coat:coat.value,body:body.value,pulse:pulse.value,symptoms:[...ss],flags:[...rr],axes:axisVals(),coldheat:coldheat.value,defex:defex.value,prod:prod.value,dir:dir.value,endpoints:endpoints.value,followup:followup.value,savedAt:new Date().toISOString()}}
 function saveCase(){let x=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]');x.unshift(data());localStorage.setItem('tcm_cases_v2',JSON.stringify(x.slice(0,200)));alert('已保存到本机');renderCases()}
 function download(o,n){let b=new Blob([JSON.stringify(o,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(u),500)}
@@ -329,6 +400,8 @@ function clinicalReasoning(text){
     add(response,'推论：舌部主诉应作为独立轴重新评估，不宜继续仅按“黄厚腻苔=痰湿热”追方');
     add(response,'当前策略：保留轻度化痰背景思路，同时把主轴转向黏膜/津液/感觉神经高敏，并先排继发性灼口原因');
   }
+  const route=inferClinicalRoute(text);
+  add(tcm,'临床路径判定：'+route.title+'；主问题：'+route.primary);
 const block=(title,arr)=>'<div><b>'+title+'</b><br>'+(arr.length?arr.map(x=>'• '+x).join('<br>'):'• 暂无明显线索')+'</div>';
   return '<div class="card" style="background:#f8fafc"><h2>自动临床推理摘要</h2><div class="why">'+block('主诉摘要',chief)+block('现代医学鉴别/待排',modern)+'</div><div class="why" style="margin-top:8px">'+block('中医核心病机',tcm)+block('建议检查',tests)+'</div>'+(response.length?'<div class="warn" style="margin-top:8px"><b>治疗反应证据</b><br>'+response.map(x=>'• '+x).join('<br>')+'</div>':'')+'<div style="margin-top:8px">'+block('复评指标',follow)+'</div>'+(red.length?'<div class="alert" style="margin-top:8px"><b>红旗提示</b><br>'+red.map(x=>'• '+x).join('<br>')+'</div>':'')+'</div>';
 }
