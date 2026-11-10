@@ -115,8 +115,12 @@ function negationSignals(text){
     noCough:/不咳嗽|不咳|没有咳嗽|无咳/.test(t),
     noFatigue:/没有乏力|没有乏力感|不乏力|无乏力|不累/.test(t),
     noThickGreasyCoat:/舌苔不厚腻|苔不厚腻|不厚腻/.test(t),
-    noBloating:/肚子也不胀|肚子不胀|腹不胀|没有腹胀/.test(t),
-    stoolNotDry:/大便不干|便不干|不干|松软|软便/.test(t)
+    noBloating:/肚子也不胀|肚子不胀|腹不胀|没有腹胀|无腹胀/.test(t),
+    noFever:/无发热|不发热|没有发热|体温正常/.test(t),
+    noWheeze:/无喘息|没有喘息|不喘|无喘鸣|没有喘鸣/.test(t),
+    noDyspnea:/无气促|没有气促|无气短|没有气短|无呼吸困难|没有呼吸困难/.test(t),
+    noOralLesion:/口腔检查未见异常|口腔未见异常|无口腔病变|没有口腔病变|未见白斑|未见糜烂/.test(t),
+    stoolNotDry:/大便不干|便不干|不干|松软|软便|没有大便干硬|没有干硬便|大便不硬|便不硬/.test(t)
   };
 }
 function affirmativeCough(text){
@@ -138,15 +142,15 @@ function inferClinicalRoute(text){
   const unilateralNasal=/(单侧|一侧|左侧|右侧).*(鼻塞|鼻涕|鼻腔|脓涕)|(?:鼻塞|鼻涕|鼻腔|脓涕).*(单侧|一侧|左侧|右侧)/.test(t);
   const foulBloodyNasal=/恶臭|臭味|腥臭|血性|带血|脓血/.test(t);
   const sinusPurulent=/鼻塞|鼻音|鼻腔|鼻窦/.test(t)&&/黄脓|脓痰|黄稠鼻涕|脓涕|黏脓涕|白黏脓涕/.test(t);
-  const sinusHeat=sinusPurulent&&/发热|前额痛|面痛|颧部痛|鼻黏膜.*红|充血|舌苔薄黄|脉浮数/.test(t);
+  const sinusHeat=sinusPurulent&&((/发热/.test(t)&&!neg.noFever)||/前额痛|面痛|颧部痛|鼻黏膜.*红|充血|舌苔薄黄|脉浮数/.test(t));
   const sinusCold=sinusPurulent&&/白黏|白粘|舌淡|齿痕|苔白|脉沉滑|怕冷|小便清长/.test(t);
 
-  const softIncomplete=/(不怎么排便|不排便|便秘|排便没劲|排便费力|很费力|排不出来|排不净|解不净|还有排不出来|五天.*一次|5天.*一次|每5天|每五天)/.test(t)&&neg.stoolNotDry;
+  const softIncomplete=/(不怎么排便|不排便|便秘|排便困难|排便没劲|排便费力|很费力|排不出来|排不净|解不净|还有排不出来|五天.*一次|5天.*一次|每5天|每五天)/.test(t)&&neg.stoolNotDry;
   const dryConstipation=/(便秘|三四天|几天.*一次|排便困难)/.test(t)&&/大便干|干硬|羊粪|羊屎|颗粒便/.test(t)&&!neg.stoolNotDry;
   const outletClues=/排不净|解不净|肛门.*堵|出口|需要手助|手指辅助|很用力|使劲/.test(t);
 
   const oralLesion=/白斑|白膜|鹅口疮|念珠菌|红斑|糜烂|萎缩性舌炎|舌面糜烂|口腔溃疡/.test(t);
-  const primaryBmsClue=burning&&!oralLesion&&/检查正常|未见异常|没有口腔病变|排除.*缺乏|排除.*念珠菌|长期.*灼/.test(t);
+  const primaryBmsClue=burning&&!oralLesion&&(/检查正常|未见异常|排除.*缺乏|排除.*念珠菌|长期.*灼/.test(t)||neg.noOralLesion);
 
   const abiraterone=/阿比特龙|abiraterone/i.test(t);
   const electrolyteDanger=abiraterone&&(/乏力|无力|心慌|心悸|心律|高血压|水肿|抽搐|晕厥/.test(t));
