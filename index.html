@@ -1,6 +1,6 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.2 Free</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V3.3 Free</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
-</style></head><body><header><h1>中医现代机制临床决策系统 V3.2 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V3.3 Free</h1><div class="sub">零费用本地推理 · 病因锚点 · 治疗反应 · 动态追问 · 八轴机制 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -129,29 +129,86 @@ function inferClinicalRoute(text){
   const onc=oncologyTreatmentSignals(t);
   const tr=treatmentResponseSignals(t);
   const coughAff=affirmativeCough(t);
-  const allergicUpper=(/鼻涕|鼻炎|鼻子.*红肿|眼痒/.test(t)&&coughAff);
+
   const whiteMucus=/白痰|白黏痰|白粘痰|白鼻涕|白黏鼻涕|白粘鼻涕/.test(t);
   const dryMucosa=/口干|咽干|嗓子干|嘴唇干|大便干|羊粪/.test(t);
   const dampHeat=/黄腻|黄厚腻|口苦|口臭|尿黄/.test(t) && !neg.noThickGreasyCoat;
-  const burning=/舌.*烫|开水烫|舌灼|灼口|烧灼感|贴了一层|像贴.*层/.test(t);
-  const sinus=/鼻塞|鼻音/.test(t)&&/黄脓|脓痰|黄稠鼻涕|脓涕/.test(t);
-  const outletConstipation=/(不怎么排便|不排便|便秘|排便没劲|排不出来|排不净|还有排不出来)/.test(t)&&neg.stoolNotDry;
-  const strongNotDeficient=/(底气十足|声音.*有力|没有乏力|没有乏力感|不乏力|人看起来不虚)/.test(t);
+  const burning=/舌.*烫|开水烫|舌灼|灼口|烧灼感|贴了一层|像贴.*层|口腔.*灼/.test(t);
 
+  const unilateralNasal=/(单侧|一侧|左侧|右侧).*(鼻塞|鼻涕|鼻腔|脓涕)|(?:鼻塞|鼻涕|鼻腔|脓涕).*(单侧|一侧|左侧|右侧)/.test(t);
+  const foulBloodyNasal=/恶臭|臭味|腥臭|血性|带血|脓血/.test(t);
+  const sinusPurulent=/鼻塞|鼻音|鼻腔|鼻窦/.test(t)&&/黄脓|脓痰|黄稠鼻涕|脓涕|黏脓涕|白黏脓涕/.test(t);
+  const sinusHeat=sinusPurulent&&/发热|前额痛|面痛|颧部痛|鼻黏膜.*红|充血|舌苔薄黄|脉浮数/.test(t);
+  const sinusCold=sinusPurulent&&/白黏|白粘|舌淡|齿痕|苔白|脉沉滑|怕冷|小便清长/.test(t);
+
+  const softIncomplete=/(不怎么排便|不排便|便秘|排便没劲|排不出来|排不净|解不净|还有排不出来|五天.*一次|每5天)/.test(t)&&neg.stoolNotDry;
+  const dryConstipation=/(便秘|三四天|几天.*一次|排便困难)/.test(t)&&/大便干|干硬|羊粪|羊屎|颗粒便/.test(t);
+  const outletClues=/排不净|解不净|肛门.*堵|出口|需要手助|手指辅助|很用力|使劲/.test(t);
+
+  const oralLesion=/白斑|白膜|鹅口疮|念珠菌|红斑|糜烂|萎缩性舌炎|舌面糜烂|口腔溃疡/.test(t);
+  const primaryBmsClue=burning&&!oralLesion&&/检查正常|未见异常|没有口腔病变|排除.*缺乏|排除.*念珠菌|长期.*灼/.test(t);
+
+  const abiraterone=/阿比特龙|abiraterone/i.test(t);
+  const electrolyteDanger=abiraterone&&(/乏力|无力|心慌|心悸|心律|高血压|水肿|抽搐|晕厥/.test(t));
+
+  const cvaPattern=coughAff&&/夜间|凌晨/.test(t)&&/刺激性气体|冷空气|油烟|香味|运动|反复/.test(t)&&(/咽痒|干痒|白痰|少痰/.test(t));
+  const allergicUpper=(/鼻涕|鼻炎|鼻子.*红肿|眼痒/.test(t)&&coughAff);
+
+  if(electrolyteDanger){
+    return {id:'abiraterone_safety',title:'肿瘤药物安全优先路径',primary:'阿比特龙相关矿皮质激素过多/低钾风险',secondary:['高血压/水肿/心律失常风险'],
+      prefer:{},suppress:{'炙甘草汤':-20,'生脉散（思路）':-8,'柴胡加龙骨牡蛎汤':-8},
+      note:'先查电解质、血压和心电图；药物不良反应优先于方证。',stopFormula:true};
+  }
   if(onc.treatmentHotflash){
     return {id:'oncology_adt',title:'肿瘤治疗相关潮热路径',primary:'ADT/内分泌治疗相关体温调节异常',secondary:['气阴不足','痰湿/代谢背景'],
       prefer:{'引火汤（思路）':22,'生脉散（思路）':12,'温胆汤':3}, suppress:{'黄连阿胶汤':-14,'柴胡加龙骨牡蛎汤':-6,'炙甘草汤':-16},
       note:'病因锚点优先于普通汗多/口干/失眠方证。'};
+  }
+  if(unilateralNasal&&foulBloodyNasal){
+    return {id:'unilateral_nasal_structural',title:'单侧脓性/血性鼻分泌物结构病变路径',primary:'鼻腔异物、鼻石、牙源性或占位等需先排',secondary:['慢性鼻窦炎可为结果而非病因'],
+      prefer:{},suppress:{'玉屏风散（思路）':-15,'止嗽散（思路）':-15,'温胆汤':-12,'杏苏散（思路）':-12},
+      note:'单侧恶臭/血性脓涕属于结构性病因提示，先耳鼻喉内镜/影像。',stopFormula:true};
+  }
+  if(burning&&oralLesion){
+    return {id:'burning_secondary_oral',title:'继发性口腔灼痛路径',primary:'先处理可见口腔局部病变/感染',secondary:['念珠菌、萎缩性舌炎、黏膜病等'],
+      prefer:{},suppress:{'黄连阿胶汤':-10,'麦门冬汤':-6,'甘露饮（思路）':-6},
+      note:'有红斑/白斑/糜烂等客观病变时，不应先诊断原发性BMS。',stopFormula:true};
   }
   if(burning&&tr.discordant){
     return {id:'burning_discordant',title:'治疗反应不同步的舌灼/异常感觉路径',primary:'舌部黏膜/感觉神经高敏',secondary:['痰湿背景可反复存在'],
       prefer:{'麦门冬汤':20,'甘露饮（思路）':dampHeat?10:3,'温胆汤':-2,'柴胡加龙骨牡蛎汤':-8}, suppress:{'温胆汤':-8,'柴胡加龙骨牡蛎汤':-8},
       note:'原方能改善背景症状但不能改变舌部主诉，必须换主轴。'};
   }
-  if(sinus&&outletConstipation){
+  if(primaryBmsClue){
+    return {id:'primary_bms',title:'原发性灼口综合征/神经病理性口腔痛路径',primary:'排除继发原因后的感觉神经异常',secondary:['情绪/睡眠可调制症状，但不是唯一病因'],
+      prefer:{'麦门冬汤':4},suppress:{'温胆汤':-8,'甘露饮（思路）':-4},
+      note:'重点是排除继发原因后再进入神经病理性疼痛路径。'};
+  }
+  if(sinusPurulent&&softIncomplete){
     return {id:'dual_sinus_constipation',title:'双问题路径：鼻腔/副鼻窦脓性分泌物 + 非燥结排便障碍',primary:'上焦局部鼻腔/副鼻窦炎症',secondary:['下焦腑气下行/排便推进或出口障碍'],
       prefer:{},suppress:{'温胆汤':-12,'生脉散（思路）':-12,'黄连阿胶汤':-12,'玉屏风散（思路）':-10,'止嗽散（思路）':-12,'杏苏散（思路）':-10},
-      note:'两个问题应拆开处理；“不咳嗽、无乏力、舌苔不厚腻”都是明确反证，不再进入咳嗽/气虚/痰湿主路径。',split:true,strongNotDeficient,neg};
+      note:'两个问题应拆开处理；鼻腔脓性分泌物不等于全身痰湿。',split:true};
+  }
+  if(softIncomplete){
+    return {id:'defecatory_disorder',title:'非燥结排便障碍路径',primary:'排便推进不足或盆底/出口协调障碍',secondary:[outletClues?'出口型线索较强':'需区分慢传输与出口障碍'],
+      prefer:{'济川煎（思路）':2},suppress:{'麻子仁丸':-10,'甘露饮（思路）':-8},
+      note:'软便、排不净/费力比“大便次数少”更提示排便功能问题；必要时肛门直肠测压/球囊排出试验。'};
+  }
+  if(dryConstipation){
+    return {id:'dry_constipation',title:'燥结/津亏便秘路径',primary:'粪便干硬/羊粪状 + 津液不足',secondary:['再辨虚实与是否需短期通腑'],
+      prefer:{'麻子仁丸':12,'济川煎（思路）':4},suppress:{'温胆汤':-8},
+      note:'与软便排不净的出口障碍严格分开。'};
+  }
+  if(cvaPattern){
+    return {id:'cough_airway_hyperreactivity',title:'慢性咳嗽/气道高反应路径',primary:'咳嗽变异性哮喘或感染后气道高反应需优先鉴别',secondary:['夜间/凌晨及刺激物诱发是关键线索'],
+      prefer:{'止嗽散（思路）':12,'杏苏散（思路）':whiteMucus?5:1,'桑菊饮（思路）':/咽干|咽痒/.test(t)?4:0},suppress:{'玉屏风散（思路）':-2},
+      note:'先做现代呼吸评估，不因“白痰”自动归为寒痰。'};
+  }
+  if(sinusPurulent){
+    const phenotype=sinusHeat?'偏热/急性炎症表型':sinusCold?'偏寒湿/慢性表型':'局部鼻窦炎症表型';
+    return {id:'sinus_local_infection',title:'鼻腔/副鼻窦局部炎症路径',primary:'慢性或急性鼻-鼻窦炎',secondary:[phenotype],
+      prefer:{},suppress:{'止嗽散（思路）':-10,'玉屏风散（思路）':-5,'温胆汤':-5},
+      note:'鼻塞 + 脓性鼻分泌物优先解释为鼻腔/副鼻窦局部病变，再按寒热表型分层。'};
   }
   if(allergicUpper){
     return {id:'allergic_upper',title:'过敏性鼻炎—鼻后滴流—气道高敏路径',primary:'鼻炎/鼻后滴流导致咽喉刺激与咳嗽',secondary:[dryMucosa?'轻度津亏/黏膜干燥':'屏障易感'],
