@@ -378,7 +378,7 @@ function calc(f,a){
   return{n,w:[...new Set(w)].slice(0,12),ag:[...new Set(ag)]}
 
 }
-function safety(){let n=[],a=+age.value,h=history.value;if(a&&a<18)n.push('儿童：不自动换算成人剂量。');if(a>=70)n.push('高龄：优先检查肝肾功能、电解质和相互作用。');if(/癌|肿瘤|转移/.test(h))n.push('肿瘤背景：治疗副作用/结构性并发症优先。');if(/抗凝|华法林|阿司匹林|氯吡格雷/.test(h))n.push('抗凝/抗血小板：活血化瘀类需评估出血风险。');if(/高血压/.test(h))n.push('高血压：长期大剂量甘草、麻黄类谨慎。');return n}
+function safety(){let n=[],a=+age.value,h=history.value;if(a&&a<18)n.push('儿童：不自动换算成人剂量。');if(a>=70)n.push('高龄：优先检查肝肾功能、电解质和相互作用。');if(/癌|肿瘤|转移/.test(h))n.push('肿瘤背景：治疗副作用/结构性并发症优先。');if(/抗凝|华法林|阿司匹林|氯吡格雷/.test(h))n.push('抗凝/抗血小板：活血化瘀类需评估出血风险。');if(/高血压/.test(h))n.push('高血压：长期大剂量甘草、麻黄类谨慎。');if(/妊娠|怀孕|孕妇|备孕/.test(h+' '+(document.getElementById('freeText')?.value||'')))n.push('妊娠或备孕：必须逐项审核药材安全性与禁忌，不可自行用药。');if(/肝硬化|肝功能异常|肾功能不全|慢性肾病/.test(h))n.push('肝肾疾病：核查药材毒性、剂量和相互作用。');return n}
 
 
 const FORMULA_HERBS={  '四妙丸':['苍术','黄柏','牛膝','薏苡仁'],
@@ -468,8 +468,30 @@ function routeFormulaWhitelist(route){
   };
   return m[route.id]||null;
 }
+function detectEmergencyFlags(text){
+  const t=String(text||'').replace(/\s+/g,'');
+  const hits=[];
+  const add=(test,label)=>{if(test)hits.push(label);};
+  add(/(?:持续|突发|剧烈|压榨性).{0,8}(?:胸痛|胸闷|胸口痛)|(?:胸痛|胸闷).{0,16}(?:气短|呼吸困难|冷汗|晕厥)/.test(t),'持续/突发胸痛或胸闷，尤其伴气短、冷汗、晕厥');
+  add(/(?:突然|突发).{0,18}(?:口角歪斜|言语不清|说话含糊|单侧无力|偏瘫|半身麻木|视力丧失)/.test(t),'突发局灶性神经症状：警惕卒中');
+  add(/呕血|大量便血|黑便.{0,12}(?:头晕|乏力|心慌)|(?:头晕|晕厥).{0,12}黑便/.test(t),'消化道出血警示');
+  add(/(?:严重|明显|无法|不能).{0,6}(?:呼吸困难|喘不过气)|(?:呼吸困难|喘不过气).{0,12}(?:发绀|嘴唇发紫|意识不清)/.test(t),'严重呼吸困难警示');
+  add(/(?:高热|高烧).{0,16}(?:意识模糊|意识不清|抽搐)/.test(t),'高热伴意识异常');
+  add(/进行性吞咽困难|吞咽越来越困难|吞咽困难.{0,18}(?:体重下降|消瘦)/.test(t),'进行性吞咽困难或伴体重下降');
+  add(/(?:新发|突然).{0,12}(?:双腿无力|双下肢无力|会阴麻木|大小便失禁)/.test(t),'新发神经功能或排尿排便障碍');
+  add(/(?:儿童|孩子|男孩|女孩|婴儿).{0,30}(?:胸壁凹陷|三凹征|呼吸急促伴喘鸣)/.test(t),'儿童呼吸窘迫警示');
+  add(/(?:单侧|一侧).{0,12}(?:血性鼻涕|鼻出血).{0,15}(?:恶臭|鼻塞)|(?:恶臭|臭味).{0,12}(?:血性鼻涕|鼻涕带血)/.test(t),'单侧恶臭血性鼻分泌物：优先排查局部病变');
+  return hits;
+}
 function analyze(){
-  if(rr.size){output.innerHTML='<div class="alert"><b>触发红旗，停止方剂排序。</b><br>'+[...rr].map(x=>'• '+x).join('<br>')+'</div>';return}
+  const narrative=[document.getElementById('freeText')?.value||'',notes.value||'',history.value||''].join(' ');
+  const emergencies=detectEmergencyFlags(narrative);
+  if(rr.size||emergencies.length){
+    output.innerHTML='<div class="alert"><b>发现急症警示，停止候选方剂排序。</b><br>'+
+      [...new Set([...rr,...emergencies])].map(x=>'• '+escapeHtml(x)).join('<br>')+
+      '<br><b>请优先接受现代医学评估；如症状严重或正在发生，请及时寻求急救。</b></div>';
+    return;
+  }
   const text=(document.getElementById('freeText')?.value||notes.value||'');
   const route=inferClinicalRoute(text);
   let a=axisVals(),top=Object.entries(a).sort((x,y)=>y[1]-x[1]).filter(x=>x[1]).slice(0,3);
@@ -478,9 +500,9 @@ function analyze(){
   let list=pool.map(f=>({f,...calc(f,a)})).sort((x,y)=>y.n-x.n).slice(0,8);
   let h='<div class="ok"><b>临床路径：</b>'+route.title+' <span class="tag">'+route.id+'</span><br><b>主问题：</b>'+route.primary+
         (route.secondary.length?'<br><b>次问题：</b>'+route.secondary.join(' · '):'')+
-        '<br><b>病因锚点：</b>'+anchor.value+
+        '<br><b>病因锚点：</b>'+escapeHtml(anchor.value)+
         '<br><b>主轴：</b>'+(top.length?top.map(x=>x[0]+' '+x[1]+'/3').join(' · '):'尚未评分')+
-        '<br><span class="small">'+route.note+'</span></div>';
+        '<br><span class="small">'+escapeHtml(route.note)+'</span></div>';
 
   if(route.stopFormula){
     h+='<div class="alert"><b>本例先暂停方剂排序。</b><br>'+route.note+'<br><span class="small">完成必要的现代医学评估后，再回到方剂层。</span></div>';
@@ -504,7 +526,7 @@ function analyze(){
   }
 
   h+='<p class="small">排序遵循：病因锚点 ＞ 高风险/治疗反应 ＞ 临床路径 ＞ 方证 ＞ 八轴。不是处方。</p>';
-  list.forEach((z,i)=>{let f=z.f;const herbs=formulaHerbs(f.name);h+='<div class="result"><b>#'+(i+1)+' '+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span> <span class="tag">风险 '+f.risk+'</span>'+(herbs?'<p><b>组成药物：</b>'+herbs.join('、')+'</p>':'<p class="small"><b>组成药物：</b>数据库暂未录入</p>')+'<p><b>病机：</b>'+f.pattern+'</p><p><b>机制：</b>'+f.mechanism+'</p><div class="why"><div><b>为什么选</b><br>'+(z.w.length?z.w.map(x=>'• '+x).join('<br>'):'暂无明显支持项')+'</div><div><b>反证</b><br>'+(z.ag.length?z.ag.map(x=>'• '+x).join('<br>'):f.contra.map(x=>'• '+x).join('<br>'))+'</div></div><p class="small"><b>鉴别：</b>'+f.compare+'</p></div>'});
+  list.forEach((z,i)=>{let f=z.f;const herbs=formulaHerbs(f.name);h+='<div class="result"><b>#'+(i+1)+' '+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span> <span class="tag">风险 '+f.risk+'</span>'+(herbs?'<p><b>组成药物：</b>'+herbs.map(escapeHtml).join('、')+'</p>':'<p class="small"><b>组成药物：</b>数据库暂未录入</p>')+'<p><b>病机：</b>'+f.pattern+'</p><p><b>机制：</b>'+f.mechanism+'</p><div class="why"><div><b>为什么选</b><br>'+(z.w.length?z.w.map(x=>'• '+x).join('<br>'):'暂无明显支持项')+'</div><div><b>反证</b><br>'+(z.ag.length?z.ag.map(x=>'• '+x).join('<br>'):f.contra.map(x=>'• '+x).join('<br>'))+'</div></div><p class="small"><b>鉴别：</b>'+f.compare+'</p></div>'});
   let sf=safety();if(sf.length)h+='<div class="warn"><b>安全提示</b><br>'+sf.map(x=>'• '+x).join('<br>')+'</div>';
   output.innerHTML=h;
   updateCompactClinicalSummary();
@@ -513,7 +535,7 @@ function data(){return{caseName:caseName.value||'未命名病例',age:age.value,
 function saveCase(){let x=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]');x.unshift(data());localStorage.setItem('tcm_cases_v2',JSON.stringify(x.slice(0,200)));alert('已保存到本机');renderCases()}
 function download(o,n){let b=new Blob([JSON.stringify(o,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(u),500)}
 function exportCase(){download(data(),(caseName.value||'病例')+'.json')}function exportAll(){download({version:2,cases:JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]')},'全部病例备份.json')}
-function renderCases(){let x=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]');cases.innerHTML=x.length?x.map((c,i)=>'<div class="dbitem"><b>'+c.caseName+'</b> <span class="small">'+(c.savedAt||'').slice(0,10)+'</span><br><button class="soft" onclick="loadCase('+i+')">载入</button> <button class="danger" onclick="delCase('+i+')">删除</button></div>').join(''):'暂无病例'}
+function renderCases(){let x=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]');cases.innerHTML=x.length?x.map((c,i)=>'<div class="dbitem"><b>'+escapeHtml(c.caseName)+'</b> <span class="small">'+escapeHtml((c.savedAt||'').slice(0,10))+'</span><br><button class="soft" onclick="loadCase('+i+')">载入</button> <button class="danger" onclick="delCase('+i+')">删除</button></div>').join(''):'暂无病例'}
 function loadCase(i){let c=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]')[i];if(!c)return;['caseName','age','sex','dx','history','anchor','notes','tongue','coat','body','pulse','coldheat','defex','prod','dir','endpoints','followup'].forEach(k=>{if(c[k]!=null&&document.getElementById(k))document.getElementById(k).value=c[k]});ss.clear();(c.symptoms||[]).forEach(x=>ss.add(x));rr.clear();(c.flags||[]).forEach(x=>rr.add(x));pills('symptoms',S,ss);pills('flags',R,rr);A.forEach(a=>setAxis(a,(c.axes||{})[a]||0));document.querySelector('.tab').click();scrollTo(0,0)}
 function delCase(i){let x=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]');x.splice(i,1);localStorage.setItem('tcm_cases_v2',JSON.stringify(x));renderCases()}
 function newCase(){location.reload()}
@@ -883,14 +905,20 @@ function runRegressionTests(){
   ];
   const results=cases.map(c=>{
     const route=inferClinicalRoute(c.text);
-    return {name:c.name,ok:route.id===c.route,expected:c.route,actual:route.id};
+    return {name:c.name,ok:route.id===c.route,expected:c.route,actual:route.id,details:[]};
   });
+  const checks=[
+    {name:'安全-胸痛气短拦截',ok:detectEmergencyFlags('突发胸痛伴气短冷汗').length>0},
+    {name:'安全-呕血拦截',ok:detectEmergencyFlags('今天出现呕血').length>0},
+    {name:'安全-普通鼻痒不过度拦截',ok:detectEmergencyFlags('鼻子痒，流清鼻涕').length===0}
+  ].map(x=>({name:x.name,ok:x.ok,expected:'通过',actual:x.ok?'通过':'失败',details:[]}));
+  results.push(...checks);
   return {pass:results.filter(x=>x.ok).length,total:results.length,results};
 }
 function renderRegressionTests(){
   const r=runRegressionTests();
   return '<div class="'+(r.pass===r.total?'ok':'alert')+'"><b>回归测试：'+r.pass+'/'+r.total+' 通过</b><br>'+
-    r.results.map(x=>(x.ok?'✓ ':'✗ ')+escapeHtml(x.name)+'：'+escapeHtml(x.actual)+(x.actual!==x.expected?'（应为 '+escapeHtml(x.expected)+'）':'')+(x.details.length?'<br><span class="small">'+x.details.map(escapeHtml).join(' · ')+'</span>':'')).join('<br>')+
+    r.results.map(x=>(x.ok?'✓ ':'✗ ')+escapeHtml(x.name)+'：'+escapeHtml(x.actual)+(x.actual!==x.expected?'（应为 '+escapeHtml(x.expected)+'）':'')+((x.details||[]).length?'<br><span class="small">'+(x.details||[]).map(escapeHtml).join(' · ')+'</span>':'')).join('<br>')+
     '</div>';
 }
 
