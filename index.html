@@ -141,8 +141,8 @@ function inferClinicalRoute(text){
   const sinusHeat=sinusPurulent&&/发热|前额痛|面痛|颧部痛|鼻黏膜.*红|充血|舌苔薄黄|脉浮数/.test(t);
   const sinusCold=sinusPurulent&&/白黏|白粘|舌淡|齿痕|苔白|脉沉滑|怕冷|小便清长/.test(t);
 
-  const softIncomplete=/(不怎么排便|不排便|便秘|排便没劲|排不出来|排不净|解不净|还有排不出来|五天.*一次|每5天)/.test(t)&&neg.stoolNotDry;
-  const dryConstipation=/(便秘|三四天|几天.*一次|排便困难)/.test(t)&&/大便干|干硬|羊粪|羊屎|颗粒便/.test(t);
+  const softIncomplete=/(不怎么排便|不排便|便秘|排便没劲|排便费力|很费力|排不出来|排不净|解不净|还有排不出来|五天.*一次|5天.*一次|每5天|每五天)/.test(t)&&neg.stoolNotDry;
+  const dryConstipation=/(便秘|三四天|几天.*一次|排便困难)/.test(t)&&/大便干|干硬|羊粪|羊屎|颗粒便/.test(t)&&!neg.stoolNotDry;
   const outletClues=/排不净|解不净|肛门.*堵|出口|需要手助|手指辅助|很用力|使劲/.test(t);
 
   const oralLesion=/白斑|白膜|鹅口疮|念珠菌|红斑|糜烂|萎缩性舌炎|舌面糜烂|口腔溃疡/.test(t);
