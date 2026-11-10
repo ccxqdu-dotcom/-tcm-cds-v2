@@ -1,6 +1,6 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V2.2</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="./manifest.webmanifest"><title>中医现代机制临床决策系统 V2.3</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f7f9;color:#0f172a}header{position:sticky;top:0;z-index:10;background:#f6f7f9ee;backdrop-filter:blur(10px);padding:12px;border-bottom:1px solid #e2e8f0}h1{font-size:18px;margin:0}.sub{font-size:11px;color:#64748b;margin-top:4px}.tabs{display:flex;gap:6px;overflow:auto;margin-top:9px}.tab{white-space:nowrap;border:1px solid #e2e8f0;background:white;border-radius:999px;padding:7px 10px}.tab.on{background:#0f172a;color:#fff}main{max-width:900px;margin:auto;padding:10px 10px 80px}.page{display:none}.page.on{display:block}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px;margin:10px 0}h2{font-size:16px;margin:0 0 10px}label{display:block;font-size:13px;color:#334155;margin:8px 0 4px}input,select,textarea{width:100%;font-size:16px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#fff}textarea{min-height:76px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:600px){.grid{grid-template-columns:1fr}}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 10px;font-size:13px}.pill.on{background:#0f172a;color:#fff}.axis{display:grid;grid-template-columns:88px 1fr 28px;gap:8px;align-items:center;margin:8px 0}.axis input{padding:0}.primary,.soft,.danger{border:0;border-radius:11px;padding:11px 13px;font-size:15px;font-weight:600}.primary{background:#0f172a;color:#fff}.soft{background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.full{width:100%}.alert,.ok,.warn{border-radius:12px;padding:10px;font-size:13px;line-height:1.5}.alert{background:#fff1f2;border:1px solid #fecdd3}.ok{background:#ecfdf5;border:1px solid #a7f3d0}.warn{background:#fff7ed;border:1px solid #fed7aa}.result{border-left:4px solid #0f172a;padding-left:10px;margin:14px 0}.tag{display:inline-block;font-size:11px;background:#f1f5f9;border-radius:999px;padding:3px 7px;margin:2px}.small{font-size:12px;color:#64748b;line-height:1.55}.why{display:grid;grid-template-columns:1fr 1fr;gap:8px}.why>div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px}@media(max-width:600px){.why{grid-template-columns:1fr}}.bottom{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;background:#fffffff2;border-top:1px solid #e2e8f0;padding:9px}.bottom button{flex:1}.dbitem{padding:10px 0;border-bottom:1px solid #e2e8f0}
-</style></head><body><header><h1>中医现代机制临床决策系统 V2</h1><div class="sub">双轨诊断 · 八轴机制 · 病因锚点 · 反证 · 证据等级 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
+</style></head><body><header><h1>中医现代机制临床决策系统 V2.3</h1><div class="sub">双轨诊断 · 八轴机制 · 病因锚点 · 反证 · 证据等级 · 本机病例库</div><div class="tabs"><button class="tab on" onclick="page('case',this)">病例</button><button class="tab" onclick="page('db',this)">方剂库</button><button class="tab" onclick="page('map',this)">机制图</button><button class="tab" onclick="page('saved',this)">病例库</button></div></header><main>
 <section id="case" class="page on">
  <div class="card" style="border:2px solid #0f172a">
   <h2>快速智能分析</h2>
@@ -91,5 +91,163 @@ function loadCase(i){let c=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]'
 function delCase(i){let x=JSON.parse(localStorage.getItem('tcm_cases_v2')||'[]');x.splice(i,1);localStorage.setItem('tcm_cases_v2',JSON.stringify(x));renderCases()}
 function newCase(){location.reload()}
 function renderDB(){let v=(q.value||'').toLowerCase();let x=F.filter(f=>!v||JSON.stringify(f).toLowerCase().includes(v));dbList.innerHTML=x.map(f=>'<div class="dbitem"><b>'+f.name+'</b> <span class="tag">'+f.cluster+'</span> <span class="tag">证据 '+f.evidence+'</span><p>'+f.pattern+'</p><p class="small">'+f.mechanism+'<br><b>支持：</b>'+f.supports.join('、')+'<br><b>反证：</b>'+f.contra.join('、')+'</p></div>').join('')}
+
+function pickSymptom(label){ if(S.includes(label)) ss.add(label); }
+
+function extractFreeText(text){
+  const t=(text||'').replace(/\s+/g,'');
+  const rules=[
+    [/反酸|烧心|泛酸|胃酸/,['烧心/反流']],
+    [/嗳气|打嗝|饱嗝/,['嗳气频繁']],
+    [/胃胀|腹胀|肚子胀/,['胃胀']],
+    [/恶心|想吐|呕吐/,['恶心']],
+    [/腹部怕凉|肚子怕凉|胃怕凉|喜热饮/,['腹部怕凉']],
+    [/口臭|口气重/,['口臭']], [/口苦/,['口苦']],
+    [/异物感|梅核气|喉咙堵|嗓子堵/,['咽中异物感']],
+    [/清嗓|清喉咙/,['清嗓频繁']],
+    [/心烦|烦躁/,['心烦']], [/失眠|睡不着|入睡困难/,['入睡困难']],
+    [/多梦|梦多/,['多梦']], [/心慌|心悸/,['心慌']], [/胸闷|胸口闷/,['胸闷']],
+    [/大汗|多汗|出汗多|盗汗/,['异常多汗']],
+    [/潮热|一阵热|阵发性发热/,['阵发潮热']],
+    [/口干|嘴干|嘴唇干/,['口干']], [/咽干|嗓子干|喉咙干/,['咽干']],
+    [/痰多|很多痰/,['痰多']], [/白痰|白黏痰|白粘痰/,['白黏痰']],
+    [/黄痰|黄稠痰/,['黄稠痰']], [/白鼻涕|白黏鼻涕|白粘鼻涕/,['白黏鼻涕']],
+    [/眼痒|眼睛痒/,['眼痒']], [/鼻炎|过敏|荨麻疹|风团/,['皮肤易过敏']],
+    [/红疹.*痒|皮肤红.*痒|湿疹.*渗出/,['红湿痒']],
+    [/皮肤干.*痒|干燥.*瘙痒|脱屑.*痒/,['干燥瘙痒']],
+    [/腹泻|拉肚子|便溏/,['腹泻']], [/五更泻|凌晨.*腹泻|天亮前.*腹泻/,['五更泻']],
+    [/紧张.*腹泻|压力.*腹泻|生气.*腹泻/,['情绪后腹泻']],
+    [/便秘|大便干|羊粪|羊屎/,['便秘']], [/羊粪|羊屎|颗粒便/,['大便羊粪状']],
+    [/乏力|疲劳|总说累|容易累|没力气/,['乏力']],
+    [/麻木|手麻|脚麻|腿麻|胳膊麻/,['肢体麻木']],
+    [/固定痛|刺痛|痛有定处/,['固定痛']], [/尿酸高|高尿酸/,['高尿酸']],
+    [/痛风.*红|关节红肿热痛|脚趾红肿/,['痛风红肿热痛']],
+    [/咽痒|嗓子痒|喉咙痒/,['咽痒']], [/咳嗽|咳/,['咳嗽']]
+  ];
+  ss.clear();
+  rules.forEach(([re,labels])=>{if(re.test(t)) labels.forEach(pickSymptom);});
+
+  const get=id=>document.getElementById(id);
+  const m=t.match(/(\d{1,3})岁/); if(m) get('age').value=m[1];
+  if(/男孩|男童|女孩|女童|儿童/.test(t)) get('sex').value='儿童';
+  else if(/男性|男，|男,/.test(text)) get('sex').value='男';
+  else if(/女性|女，|女,/.test(text)) get('sex').value='女';
+
+  if(/黄厚腻|黄腻苔|苔黄.*腻/.test(t)) get('coat').value='黄腻';
+  else if(/白腻苔|苔白.*腻/.test(t)) get('coat').value='白腻';
+  else if(/少苔|无苔/.test(t)) get('coat').value='少苔';
+  else if(/薄白苔|苔薄白/.test(t)) get('coat').value='薄白';
+
+  if(/舌暗|紫暗/.test(t)) get('tongue').value='暗';
+  else if(/舌红|舌质红/.test(t)) get('tongue').value='红';
+  else if(/舌淡|舌质淡/.test(t)) get('tongue').value='淡';
+
+  if(/胖大舌|舌胖/.test(t)) get('body').value='胖大';
+  else if(/齿痕/.test(t)) get('body').value='齿痕';
+  else if(/裂纹|舌裂/.test(t)) get('body').value='裂纹';
+
+  const hasCold=/怕冷|腹部怕凉|白痰|白鼻涕|喜热/.test(t);
+  const hasHeat=/口苦|黄痰|黄腻|发热|咽痛|红肿|潮热/.test(t);
+  if(hasCold&&hasHeat)get('coldheat').value='寒热错杂';
+  else if(hasHeat)get('coldheat').value='偏热';
+  else if(hasCold)get('coldheat').value='偏寒';
+
+  if(/乏力|疲劳|总说累|虚弱/.test(t)&&/痰|湿|胀|反流|痛/.test(t))get('defex').value='虚实夹杂';
+  else if(/乏力|疲劳|总说累|虚弱/.test(t))get('defex').value='偏虚';
+
+  if(/痰多|白痰|黄痰|苔腻/.test(t))get('prod').value='痰';
+  else if(/湿|水肿|身重/.test(t))get('prod').value='湿';
+  else if(/口干|咽干|便秘|舌裂/.test(t))get('prod').value='燥';
+  else if(/固定痛|舌暗|瘀/.test(t))get('prod').value='血瘀';
+
+  if(/反酸|烧心|嗳气|恶心|呕吐|上冲/.test(t))get('dir').value='上逆';
+  else if(/压力|紧张|焦虑|情绪|胸闷/.test(t))get('dir').value='郁滞';
+
+  if(/幽门螺杆菌|H\.pylori|Hp阳性/i.test(text))get('anchor').value='H. pylori';
+  else if(/尿酸|痛风/.test(t))get('anchor').value='高尿酸/尿酸晶体';
+  else if(/鼻炎|鼻后滴流|眼痒|过敏/.test(t))get('anchor').value='过敏原/鼻后滴流';
+  else if(/癌|肿瘤|癌前|肠化|异型增生/.test(t))get('anchor').value='肿瘤/癌前病变';
+  else if(/压力|紧张|焦虑|情绪/.test(t))get('anchor').value='自主神经/压力';
+
+  get('notes').value=text;
+  pills('symptoms',S,ss);
+}
+
+function inferAxesFromFreeText(text){
+  autoAxes();
+  const t=(text||'').replace(/\s+/g,'');
+  const bump=(a,v)=>setAxis(a,Math.max(v,+document.getElementById('a_'+a).value));
+  if(/红肿|发热|黄痰|咽痛|炎症|口苦|黄腻/.test(t))bump('炎症',2);
+  if(/胃胀|嗳气|反酸|恶心|便秘|腹泻|肠鸣/.test(t))bump('动力',2);
+  if(/咽干|口干|嘴唇干|皮肤干|糜烂|萎缩|肠化/.test(t))bump('屏障',2);
+  if(/舌暗|固定痛|刺痛|瘀|麻木/.test(t))bump('微循环',2);
+  if(/失眠|多梦|心慌|胸闷|压力|紧张|焦虑|潮热/.test(t))bump('神经自主',2);
+  if(/水肿|痰多|苔腻|身重|尿少/.test(t))bump('水液',2);
+  if(/尿酸|血糖|血脂|胆汁|胆囊/.test(t))bump('代谢排泄',2);
+  if(/肿瘤|癌前|息肉|肠化|纤维化|结节/.test(t))bump('异常增殖',2);
+}
+
+function clinicalReasoning(text){
+  const t=(text||'').replace(/\s+/g,'');
+  const chief=[],modern=[],tcm=[],tests=[],follow=[],red=[];
+  const add=(a,x)=>{if(x&&!a.includes(x))a.push(x);};
+
+  if(/咳/.test(t))add(chief,'咳嗽');
+  if(/痰/.test(t))add(chief,'痰液异常');
+  if(/鼻涕|鼻塞|鼻炎/.test(t))add(chief,'鼻部症状');
+  if(/咽干|咽痒|清嗓|嗓子/.test(t))add(chief,'咽喉不适');
+  if(/反酸|烧心|嗳气|胃胀|恶心/.test(t))add(chief,'上消化道/反流症状');
+  if(/便秘|腹泻|大便/.test(t))add(chief,'排便异常');
+  if(/失眠|多梦|心烦|心慌|胸闷/.test(t))add(chief,'睡眠/自主神经症状');
+  if(/过敏|眼痒|荨麻疹|皮疹/.test(t))add(chief,'过敏/皮肤表现');
+
+  if(/鼻涕|鼻炎|眼痒/.test(t)&&/咳|清嗓|咽痒/.test(t)){add(modern,'过敏性鼻炎 / 鼻后滴流');add(tests,'鼻腔与咽后壁检查，必要时过敏评估');}
+  if(/咳/.test(t)&&/夜间|晚上|运动|冷空气|反复/.test(t)){add(modern,'咳嗽变异性哮喘或气道高反应');add(tests,'持续/反复时考虑肺功能 ± FeNO');}
+  if(/反酸|烧心|嗳气|清嗓|喉咙异物/.test(t)){add(modern,'胃食管反流 / 咽喉反流');add(tests,'记录反流频率；报警症状时胃镜/专科评估');}
+  if(/舌.*烫|舌灼|灼口|烧灼感/.test(t)){add(modern,'继发性灼口/舌痛：口干、念珠菌、铁/B12/叶酸/锌缺乏、糖代谢、甲状腺、药物等');add(tests,'口腔检查；CBC、铁蛋白、B12、叶酸、HbA1c/血糖、TSH，必要时锌');}
+  if(/荨麻疹|洗澡.*疙瘩|热水.*疹/.test(t))add(modern,'热诱发/胆碱能性荨麻疹样反应');
+  if(/尿酸|痛风/.test(t)){add(modern,'高尿酸血症/尿酸晶体炎症');add(tests,'血尿酸、肾功能');}
+
+  if(/白痰|白鼻涕|怕冷|腹部怕凉/.test(t))add(tcm,'寒/寒饮或凉燥因素');
+  if(/黄痰|黄腻|口苦|咽痛|发热|红肿/.test(t))add(tcm,'热/湿热或炎症因素');
+  if(/痰多|苔腻|胸闷|恶心/.test(t))add(tcm,'痰湿/痰饮');
+  if(/口干|咽干|嘴唇干|大便干|少苔|裂纹/.test(t))add(tcm,'津亏/燥/阴液不足');
+  if(/反酸|嗳气|恶心|上冲/.test(t))add(tcm,'胃气上逆');
+  if(/压力|紧张|焦虑|情绪|胸闷/.test(t))add(tcm,'气机郁滞 / 自主神经轴');
+  if(/乏力|疲劳|总说累/.test(t))add(tcm,'气虚/脾肺底盘不足');
+  if(/过敏|鼻炎|眼痒|荨麻疹/.test(t))add(tcm,'肺卫不固/风邪易感（过敏体质层）');
+
+  if(/咳/.test(t))add(follow,'每天咳嗽/夜咳次数、是否喘鸣、是否影响睡眠');
+  if(/反酸|烧心/.test(t))add(follow,'每周反流/烧心次数及诱因');
+  if(/便秘|羊粪|大便干/.test(t))add(follow,'Bristol分型、排便频率');
+  if(/皮疹|荨麻疹|瘙痒/.test(t))add(follow,'皮疹持续时间及与热水/运动/食物/药物关系');
+
+  if(/呼吸困难|发紫|胸壁凹陷/.test(t))add(red,'呼吸困难/发绀：优先急诊或儿科呼吸评估');
+  if(/胸痛|晕厥|冷汗/.test(t))add(red,'胸痛伴晕厥/冷汗：优先排心血管急症');
+  if(/黑便|呕血|便血/.test(t))add(red,'消化道出血征象：优先就医');
+
+  const block=(title,arr)=>'<div><b>'+title+'</b><br>'+(arr.length?arr.map(x=>'• '+x).join('<br>'):'• 暂无明显线索')+'</div>';
+  return '<div class="card" style="background:#f8fafc"><h2>自动临床推理摘要</h2><div class="why">'+block('主诉摘要',chief)+block('现代医学鉴别/待排',modern)+'</div><div class="why" style="margin-top:8px">'+block('中医核心病机',tcm)+block('建议检查',tests)+'</div><div style="margin-top:8px">'+block('复评指标',follow)+'</div>'+(red.length?'<div class="alert" style="margin-top:8px"><b>红旗提示</b><br>'+red.map(x=>'• '+x).join('<br>')+'</div>':'')+'</div>';
+}
+
+function analyzeFreeText(){
+  const el=document.getElementById('freeText');
+  const text=(el&&el.value||'').trim();
+  if(!text){alert('请先输入一段症状描述');return;}
+  try{
+    extractFreeText(text);
+    inferAxesFromFreeText(text);
+    const top=Object.entries(axisVals()).sort((a,b)=>b[1]-a[1]).filter(x=>x[1]).slice(0,4);
+    document.getElementById('extractPreview').innerHTML=
+      '<div class="ok"><b>自动提取：</b> '+([...ss].length?[...ss].map(x=>'<span class="tag">'+x+'</span>').join(' '):'未识别到预设症状')+
+      '<br><b>推测主轴：</b> '+(top.length?top.map(x=>x[0]+' '+x[1]+'/3').join(' · '):'未定')+
+      '</div>'+clinicalReasoning(text);
+    analyze();
+    setTimeout(()=>document.getElementById('output').scrollIntoView({behavior:'smooth',block:'start'}),100);
+  }catch(e){
+    document.getElementById('extractPreview').innerHTML='<div class="alert"><b>分析程序报错：</b>'+String(e.message||e)+'</div>';
+  }
+}
+
 pills('symptoms',S,ss);pills('flags',R,rr);renderAxes();AN.forEach(x=>{let o=document.createElement('option');o.textContent=x;anchor.appendChild(o)});renderCases();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script></body></html>
