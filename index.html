@@ -234,6 +234,24 @@ function inferClinicalRoute(text){
       note:'先把睡眠高唤醒与反流/胃肠动力作为双轴；拔罐次数多只记录为诱因，不直接作为病因锚点。'};
   }
 
+
+  const insomniaReflux=/睡不着|入睡困难|睡眠特别不好|多梦|做梦/.test(t)&&/反流|反流性食管炎|口酸|嘴里.*酸|反酸|烧心/.test(t);
+  const nocturnalGut=/夜里.*叽里咕噜|夜间.*肠鸣|肚子.*叽里咕噜|肠鸣/.test(t);
+  const cardioDiscomfort=/心脏.*不舒服|心慌|心悸|胸闷/.test(t);
+  const cardioRedFlag=/胸痛.*活动|活动.*胸痛|晕厥|昏厥|明显心律不齐|持续胸痛|气短冷汗/.test(t);
+  const overcupping=/拔罐.*多|拔罐次数.*多|拔得.*虚/.test(t);
+
+  if(insomniaReflux&&cardioRedFlag){
+    return {id:'reflux_insomnia_cardiac_safety',title:'反流 + 失眠伴心脏红旗路径',primary:'先排心血管问题，再处理胃脑轴',secondary:['反流症状持续','失眠/自主神经激活'],
+      prefer:{},suppress:{},note:'胸痛/晕厥/活动诱发等心脏红旗优先现代医学评估。',stopFormula:true};
+  }
+  if(insomniaReflux){
+    return {id:'reflux_insomnia_autonomic',title:'反流/胃肠动力 + 失眠多梦/自主神经双轴',primary:'胃食管反流或功能性反流/胃肠动力异常影响睡眠',secondary:[nocturnalGut?'夜间肠鸣/胃肠动力敏感':'胃脑轴',cardioDiscomfort?'心悸/心脏不适需评估':'自主神经兴奋'],
+      prefer:{'温胆汤':16,'半夏厚朴汤':14,'酸枣仁汤（思路）':12,'柴胡加龙骨牡蛎汤':6,'黄连阿胶汤':/口干|潮热|舌红少苔/.test(t)?5:-4},
+      suppress:{'生脉散（思路）':-4,'引火汤（思路）':-8,'四神丸':-8},
+      note:(overcupping?'“拔罐太多导致虚”仅作主观线索，不作为病因锚点；':'')+'反流治疗后仍口酸，应先确认用药依从性/时机并评估持续反流或功能性反流；失眠与胃肠症状可相互放大。'};
+  }
+
   const postInfectiousPhlegm=/十多天|10多天|十几天|感冒后|咽炎后|扁桃体.*发炎|吃完.*嗓子.*好/.test(t)&&affirmativeCough(t)&&/痰多|痰也特别多|有痰/.test(t);
   const nasalItch=/鼻痒|鼻子.*痒/.test(t);
   if(postInfectiousPhlegm){
@@ -404,7 +422,8 @@ function routeFormulaWhitelist(route){
     burning_discordant:['麦门冬汤','甘露饮（思路）','温胆汤','柴胡加龙骨牡蛎汤'],
     oncology_adt:['引火汤（思路）','生脉散（思路）','温胆汤'],
     dry_constipation:['麻子仁丸','济川煎（思路）'],
-    defecatory_disorder:['济川煎（思路）']
+    defecatory_disorder:['济川煎（思路）'],
+    reflux_insomnia_autonomic:['温胆汤','半夏厚朴汤','酸枣仁汤（思路）','柴胡加龙骨牡蛎汤','黄连阿胶汤']
   };
   return m[route.id]||null;
 }
@@ -805,6 +824,7 @@ function runRegressionTests(){
     {name:'本地-ADT潮热',text:'男73岁，前列腺癌骨转移，长期内分泌激素治疗，突然潮热出汗很多，乏力口干心慌',route:'oncology_adt'},
 
     {name:'固定-不咳嗽出来并非否定咳嗽',text:'杜医生，您帮我开点药啊，我咳嗽的特别频繁，有痰，嗓子也不舒服，鼻子痒，从开始鼻子干嗓子干到现在得十多天了，去医院了说扁桃体发炎了，开了银黄口服液，吃完了嗓子不那么难受，但是咳嗽的厉害了，痰也特别多，不咳嗽出来胸口就有点不舒服，我自己吃头孢吃了两天，也没怎么见效，最近特别爱吃雪糕',route:'postinfectious_phlegm_cough'},
+    {name:'固定-反流口酸失眠多梦夜间肠鸣',text:'最近睡眠特别不好，要不睡不着，要不做梦，心脏有些不舒服，吃了一个月西药治疗反流性食管炎，嘴里还是有酸，夜里肚子里叽里咕噜明显，拔罐次数有点多，吃安眠药勉强能睡',route:'reflux_insomnia_autonomic'},
     {name:'固定-扁桃体炎后痰多频咳鼻痒',text:'咳嗽特别频繁，有痰，嗓子不舒服，鼻子痒，从鼻子干嗓子干开始十多天，医院说扁桃体发炎，银黄口服液后嗓子好些但咳嗽更厉害，痰特别多，不咳出来胸口不舒服，头孢两天没效',route:'postinfectious_phlegm_cough'},
     {name:'外部-CVA夜咳刺激诱发',text:'男35岁，咳嗽反复，白天晚上都咳，夜间更重，刺激性气体后加重，少量白痰，咽干咽痒，肺通气基本正常但小气道功能下降',route:'cough_airway_hyperreactivity'},
     {name:'外部-慢性鼻窦炎白黏脓涕寒湿表型',text:'反复鼻塞半年，大量白黏脓涕，嗅觉减退，鼻黏膜淡白水肿，舌淡齿痕，苔白，脉沉滑',route:'sinus_local_infection'},
